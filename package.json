@@ -1,0 +1,36 @@
+{
+	"name": "react_native_study",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"start": "node node_modules/react-native/local-cli/cli.js start",
+		"test": "jest"
+	},
+	"dependencies": {
+		"react": "16.0.0",
+		"react-native": "0.50.3",
+		"react-native-banner-carousel": "^1.0.2",
+		"react-native-dropdownalert": "^3.3.0",
+		"react-native-tab-navigator": "^0.3.4",
+		"react-native-textinput-effects": "^0.4.2",
+		"react-native-vector-icons": "^4.4.3",
+		"react-navigation": "^1.0.0-beta.19",
+		"react-redux": "^5.0.6",
+		"realm": "^2.2.7",
+		"redux": "^3.7.2",
+		"redux-actions": "^2.2.1",
+		"redux-thunk": "^2.2.0"
+	},
+	"devDependencies": {
+		"babel-cli": "^6.26.0",
+		"babel-jest": "21.2.0",
+		"babel-preset-flow": "^6.23.0",
+		"babel-preset-react-native": "4.0.0",
+		"flow-bin": "^0.65.0",
+		"jest": "21.2.1",
+		"react-test-renderer": "16.0.0"
+	},
+	"jest": {
+		"preset": "react-native"
+	}
+}

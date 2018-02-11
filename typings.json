@@ -1,0 +1,10 @@
+{
+  "globalDependencies": {
+    "redux": "registry:dt/redux#3.5.2+20160703092728",
+    "redux-thunk": "registry:dt/redux-thunk#2.1.0+20160703120921"
+  },
+  "dependencies": {
+    "react": "registry:dt/react#15.0.0+20170324160437",
+    "react-native": "registry:dt/react-native#0.42.0+20170324170601"
+  }
+}
