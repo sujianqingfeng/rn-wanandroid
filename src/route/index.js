@@ -7,6 +7,7 @@ import LoginScreen from '../screen/LoginScreen'
 import UserDrawer from '../screen/UserDrawer'
 import SystemDetailScreen from '../screen/SystemDetailScreen'
 import SystemView from '../screen/SystemView'
+import ArticleDetailSceen from '../screen/ArticleDetailSceen'
 
 
 const NavHome = StackNavigator({
@@ -25,7 +26,11 @@ const NavHome = StackNavigator({
     system_datail: {
         screen: SystemDetailScreen
     },
+    article_detail:{
+        screen:ArticleDetailSceen
+    }
 }, {
+        header: null,
         headerStyle: {
             backgroundColor: '#fff'
         },

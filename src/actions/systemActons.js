@@ -16,6 +16,16 @@ function getSystemList(){
 }
 
 
+
+function getSystemDetailList(page,id){
+    return dispatch=>{
+        HttpUtil.get('/article/list/'+page+'/json?cid='+id)
+        .then(res=>dispatch(createAction(systemTypes.FETCH_SYSTEM_DETAIL_LIST_DONE)(res.data)))
+    }
+}
+
+
 export {
-    getSystemList
+    getSystemList,
+    getSystemDetailList
 }

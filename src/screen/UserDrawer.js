@@ -10,12 +10,20 @@ import {
 
 import Icon from 'react-native-vector-icons/Ionicons'
 
+const winheight = Dimensions.get('window').height
+
 export default class UserDrawer extends Component{
 
 
     render(){
         return (
-            <View>            
+            <View style={styles.contentWarpper}>    
+
+                <View style={styles.header}>
+                
+
+                </View>
+
                 <Button title='登录' onPress={()=> this.props.navigation.navigate('login')} />
             </View>
         )
@@ -23,4 +31,18 @@ export default class UserDrawer extends Component{
 
 }
 
+
+const styles = StyleSheet.create({
+
+
+    contentWarpper:{
+        flex: 1,
+    },
+    header:{
+        height:winheight*0.3,
+        backgroundColor: 'rgba(52,52,52,0.7)',
+    }
+
+
+})
 

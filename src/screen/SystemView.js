@@ -67,10 +67,8 @@ class SystemView extends React.Component {
             <FlatList
                 data={this.props.isSucc ? this.props.data : []}
                 renderItem={this._rederItem}
-
                 ItemSeparatorComponent={this._renderItemSeparatorComponent}
                 keyExtractor={this._keyExtractor}
-
             />
         )
     }

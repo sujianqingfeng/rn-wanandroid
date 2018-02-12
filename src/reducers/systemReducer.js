@@ -7,7 +7,8 @@ import * as systemTypes from '../constants/systemTypes'
 
 const defaultStatus = {
     data: null,
-    isSucc: false
+    isSucc: false,
+    detail:null
 }
 
 
@@ -18,6 +19,15 @@ export default handleActions({
                 ...state,
                 isSucc: true,
                 data: action.payload
+            }
+        }
+    },
+    [systemTypes.FETCH_SYSTEM_DETAIL_LIST_DONE]: {
+        next(state, action) {
+            return {
+                ...state,
+                isSucc: true,
+                detail: action.payload
             }
         }
     }
