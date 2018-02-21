@@ -7,6 +7,7 @@
 		"test": "jest"
 	},
 	"dependencies": {
+		"merge-stream": "^1.0.1",
 		"react": "16.0.0",
 		"react-native": "0.50.3",
 		"react-native-banner-carousel": "^1.0.2",

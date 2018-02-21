@@ -17,6 +17,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import Homeview from './HomeView'
 import SystemView from './SystemView'
 import ProjeceView from './ProjectView'
+import LikeView from './LikeView'
 import HeaderBar from './HeaderBar'
 
 const windowWidth = Dimensions.get('window').width;
@@ -48,7 +49,7 @@ class HomeScreen extends Component {
 
         return (
             <View style={{flex: 1,}} >
-                <HeaderBar navigation={this.props.navigation} title={this.state.title} leftIcon='md-menu' isGoBank={false} screenName='DrawerToggle' />
+                <HeaderBar navigation={this.props.navigation} rightIcon='md-search' rightAction={()=>this.props.navigation.navigate('search')} title={this.state.title} leftIcon='md-menu' isGoBank={false} screenName='DrawerToggle' />
                 <TabNavigator  >
                     <TabNavigator.Item
                         selected={this.state.selectedTab === 'home'}
@@ -80,7 +81,7 @@ class HomeScreen extends Component {
                             this.setState({ selectedTab: 'project',title: '项目'  })
                         
                         }}>
-                        <ProjeceView />
+                        <ProjeceView navigation={this.props.navigation}/>
                     </TabNavigator.Item>
 
 
@@ -91,7 +92,7 @@ class HomeScreen extends Component {
                         onPress={() => {
                             this.setState({ selectedTab: 'like',title: '收藏' })
                         }}>
-                        <Text>like</Text>
+                        <LikeView navigation={this.props.navigation}/>
                     </TabNavigator.Item>
 
                 </TabNavigator>

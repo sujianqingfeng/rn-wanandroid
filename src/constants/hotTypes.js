@@ -1,0 +1,3 @@
+export const FETCH_HOT_DONE = 'FETCH_HOT_DONE'
+
+export const FETCH_FRIEND_DONE = 'FETCH_FRIEND_DONE'

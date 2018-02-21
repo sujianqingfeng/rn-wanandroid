@@ -8,6 +8,8 @@ import {
 } from 'react-native'
 
 
+import * as collectActions from '../actions/collectActions'
+
 import HeaderBar from './HeaderBar'
 
 export class ActicleDetailScreen extends React.PureComponent {
@@ -29,7 +31,6 @@ export class ActicleDetailScreen extends React.PureComponent {
             <View style={{flex:1}}>
                 <HeaderBar rightIcon='md-heart-outline' navigation={this.props.navigation} title={this.props.navigation.state.params.title} />
                 <WebView
-
                     automaticallyAdjustContentInsets={false}
                     style={styles.webView}
                     source={{ uri: this.props.navigation.state.params.link }}
@@ -52,4 +53,13 @@ const styles = StyleSheet.create({
     }
 })
 
-export default ActicleDetailScreen
+
+export default connect((state) => ({
+    isAddInSite: state.collect.isAddInSite
+  }),
+    (dispatch) => ({
+      postAddCollectInSite: (id)=>dispatch(collectActions.postAddCollectInSite(id))
+    })
+  )(ActicleDetailScreen)
+
+

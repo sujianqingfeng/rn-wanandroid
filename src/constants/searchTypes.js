@@ -1,0 +1,1 @@
+export const FETCH_SEARCH_DONE = 'FETCH_SEARCH_DONE'

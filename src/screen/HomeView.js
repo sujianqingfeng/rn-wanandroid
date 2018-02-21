@@ -14,6 +14,7 @@ import Carousel from 'react-native-banner-carousel'
 import ArticleItemView from './ArticleItemView'
 import * as homeActions from '../actions/homeActions'
 
+
 const BannerWidth = Dimensions.get('window').width
 const BannerHeight = 260;
 

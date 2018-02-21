@@ -6,7 +6,7 @@ import {
     Button,
     StyleSheet,
     Dimensions,
-    TouchableOpacity
+    TouchableNativeFeedback
 } from 'react-native'
 import { connect } from 'react-redux'
 import { Hideo } from 'react-native-textinput-effects'
@@ -80,10 +80,14 @@ class LoginView extends Component {
 
 
 
-                <TouchableOpacity style={styles.loginWarpper} onPress={() => this.props.login(this.state.user, this.state.pwd)}>
+                <TouchableNativeFeedback background={TouchableNativeFeedback.Ripple('rgba(52,52,52,0.5)', true)} onPress={() => this.props.login(this.state.user, this.state.pwd)}>
 
+                    <View  style={styles.loginWarpper}>
+                   
                     <Text style={styles.loginText}>注 册</Text>
-                </TouchableOpacity>
+                    </View>
+                    
+                </TouchableNativeFeedback>
 
             </View>
 

@@ -1,0 +1,1 @@
+export const FETCH_LIKE_DONE = 'FETCH_LIKE_DONE'

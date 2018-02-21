@@ -8,39 +8,56 @@ import UserDrawer from '../screen/UserDrawer'
 import SystemDetailScreen from '../screen/SystemDetailScreen'
 import SystemView from '../screen/SystemView'
 import ArticleDetailSceen from '../screen/ArticleDetailSceen'
+import SearchScreen from '../screen/SearchScreen'
+import SearchResultScreen from '../screen/SearchResultScreen'
 
 
 const NavHome = StackNavigator({
     welcome: {
         screen: WelcomeScreen,
-        navigationOptions: ({ navigation }) => ({
-            header: null,
-        })
+        navigationOptions:{
+            header:null
+        }
+       
     },
     home: {
         screen: HomeScreen,
+        navigationOptions:{
+            header:null
+        }
     },
     login: {
-        screen: LoginScreen
+        screen: LoginScreen,
+        navigationOptions:{
+            header:null
+        }
     },
     system_datail: {
-        screen: SystemDetailScreen
+        screen: SystemDetailScreen,
+        navigationOptions:{
+            header:null
+        }
     },
     article_detail:{
-        screen:ArticleDetailSceen
-    }
-}, {
-        header: null,
-        headerStyle: {
-            backgroundColor: '#fff'
-        },
-
-        headerTitleStyle: {
-            color: 'blue',
-            alignSelf: 'center',
+        screen:ArticleDetailSceen,
+        navigationOptions:{
+            header:null
+        }
+    },
+    search:{
+        screen:SearchScreen,
+        navigationOptions:{
+            header:null
+        }
+    },
+    search_result:{
+        screen:SearchResultScreen,
+        navigationOptions:{
+            header:null
         }
     }
-);
+}
+)
 
 
 const RootNavigator = DrawerNavigator({
