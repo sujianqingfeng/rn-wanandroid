@@ -29,22 +29,27 @@ class UserScreen extends React.PureComponent {
     if (props.isLogin) {
 
       if (props.isLoginSucc) {
-
-      } else {
+        this.refs.toast.show('登陆成功', DURATION.LENGTH_SHORT);
+        this._goBack()
+      } else if(props.loginComplate) {
         this.refs.toast.show(props.loginData, DURATION.LENGTH_SHORT);
+       
       }
     } else {
 
       if (props.isRegisterSucc) {
-
-      } else {
-
+        this.refs.toast.show('注册成功', DURATION.LENGTH_SHORT);
+      } else if(props.registerComplate) {
         this.refs.toast.show(props.registerData, DURATION.LENGTH_SHORT);
       }
     }
-
-
   }
+
+  componentWillUnmount(){ 
+    this.setState = (state,callback)=>{
+      return
+    }
+}
 
 
 
@@ -157,7 +162,9 @@ const mapState = (state) => ({
   isRegisterSucc: state.user.isRegisterSucc,
   registerData: state.user.registerData,
   isLoginSucc: state.user.isLoginSucc,
-  loginData: state.user.loginData
+  loginData: state.user.loginData,
+  loginComplate:state.user.loginComplate,
+  registerComplate:state.user.registerComplate
 })
 
 const dispatchAction = (dispatch) => ({

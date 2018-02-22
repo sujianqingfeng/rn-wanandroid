@@ -58,7 +58,7 @@ class SearchScreen extends Component {
   )
 
   _renderFriendItem = (item, index) => (
-    <Text onPress={()=>alert(11)} style={[styles.hotText,{color:colors[index%colors.length]}]} key={index} >{item.name}</Text>
+    <Text onPress={()=> this.props.navigation.navigate("article_detail", item)} style={[styles.hotText,{color:colors[index%colors.length]}]} key={index} >{item.name}</Text>
   )
 
   _rightAction = ()=>{

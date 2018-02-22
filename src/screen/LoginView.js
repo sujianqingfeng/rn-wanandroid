@@ -60,7 +60,7 @@ export default class LoginView extends React.PureComponent {
                     />
                 </View>
 
-                <TouchableNativeFeedback key='login' background={TouchableNativeFeedback.Ripple('rgba(52,52,52,0.5)', true)}  onPress={() => console.log(1111)}>
+                <TouchableNativeFeedback key='login' background={TouchableNativeFeedback.Ripple('rgba(52,52,52,0.5)', true)}  onPress={() =>this.props.login(this.state.user, this.state.pwd)}>
 
                     <View style={styles.loginWarpper}>
                     <Text style={styles.loginText}>登 录</Text>

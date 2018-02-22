@@ -64,7 +64,7 @@ class LikeView extends Component {
       item:item
     }
     return (
-      <ArticleItemView  navigation={this.props.navigation} hide={false} item={data}/>
+      <ArticleItemView  navigation={this.props.navigation} hide={false} item={data} outline={false}/>
     )
   }
   ;

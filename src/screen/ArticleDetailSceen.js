@@ -29,7 +29,7 @@ export class ActicleDetailScreen extends React.PureComponent {
         return (
 
             <View style={{flex:1}}>
-                <HeaderBar rightIcon='md-heart-outline' navigation={this.props.navigation} title={this.props.navigation.state.params.title} />
+                <HeaderBar rightIcon='md-heart-outline' navigation={this.props.navigation} title={this.props.navigation.state.params.title?this.props.navigation.state.params.title:this.props.navigation.state.params.name} />
                 <WebView
                     automaticallyAdjustContentInsets={false}
                     style={styles.webView}

@@ -18,8 +18,14 @@ class ArticleItemView extends React.PureComponent {
   static PropTypes = {
     item: PropTypes.object.isRequired,
     hide: PropTypes.bool.isRequired,
-    navigation: PropTypes.object.isRequired
+    navigation: PropTypes.object.isRequired,
+    outline:PropTypes.bool
   };
+
+
+  static defaultProps = {
+    outline:true
+  }
 
 
   componentWillReceiveProps = (nextProps) => {
@@ -28,10 +34,19 @@ class ArticleItemView extends React.PureComponent {
     }
   }
   
+  _requestAction = (bool,id)=>{
 
+    if(bool){
+
+    }else{
+      this.props.postAddCollectInSite(id)
+    }
+   
+
+  }
 
   render() {
-    const { hide } = this.props;
+    const { hide,outline } = this.props;
     const { item } = this.props.item;
     
     return (
@@ -62,12 +77,12 @@ class ArticleItemView extends React.PureComponent {
               "rgba(52,52,52,0.5)",
               true
             )}
-            onPress={() => this.props.postAddCollectInSite(item.id)}
+            onPress={() =>this._requestAction(item.collect||!outline,item.id)}
           >
             <View style={{ height: 30, width: 30, borderRadius: 15,marginRight:8 }}>
               <Icon
                
-                name={item.collect?'md-heart':'md-heart-outline'}
+                name={(item.collect||!outline)?'md-heart':'md-heart-outline'}
                 size={30}
                 color="#e91e63"
               />
