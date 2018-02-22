@@ -8,6 +8,8 @@ import  HttpUtil from '../utils/HttpUtil'
 function login(username,password){
 
     return dispatch=>{
+
+        dispatch(createAction(userTypes.FETCH_LOGIN_DOING)())
         HttpUtil.post('/user/login',{
             username:username,
             password:password
@@ -26,6 +28,7 @@ function login(username,password){
 function register(username,password,repassword){
 
     return dispatch =>{
+        dispatch(createAction(userTypes.FETCH_REGISTER_DOING)())
         HttpUtil.post('/user/register',{
             username:username,
             password:password,

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+eimport React, { Component } from 'react';
 import { Provider, connect } from "react-redux";
 
 import AppNavigator from './src/route'
@@ -7,13 +7,19 @@ import AppWithNavigationState from './src'
 
 const store = getStore();
 
+
 export default class App extends Component {
+
+  componentWillMount(){
+    console.log('mount')
+  }
 
   render() {
     return (
       <Provider store={store}>
         <AppWithNavigationState />
       </Provider>
+     
     );
   }
 }

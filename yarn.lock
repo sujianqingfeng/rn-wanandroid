@@ -3520,13 +3520,6 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@15.5.10:
-  version "15.5.10"
-  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.10.tgz#2797dfc3126182e3a95e3dfbb2e893ddd7456154"
-  dependencies:
-    fbjs "^0.8.9"
-    loose-envify "^1.3.1"
-
 prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0:
   version "15.6.0"
   resolved "http://r.cnpmjs.org/prop-types/download/prop-types-15.6.0.tgz#ceaf083022fc46b4a35f69e13ef75aed0d639856"
@@ -3610,6 +3603,12 @@ react-devtools-core@^2.5.0:
     shell-quote "^1.6.1"
     ws "^2.0.3"
 
+react-native-awesome-alerts@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/react-native-awesome-alerts/-/react-native-awesome-alerts-1.0.6.tgz#1e7f8816287b6f08b259c8a808233fccddcc1d04"
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-banner-carousel@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/react-native-banner-carousel/-/react-native-banner-carousel-1.0.2.tgz#dc1343d8c37d401f867aee8f140ef7d9e33b07eb"
@@ -3630,11 +3629,11 @@ react-native-drawer-layout@1.3.2:
   dependencies:
     react-native-dismiss-keyboard "1.0.0"
 
-react-native-dropdownalert@^3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/react-native-dropdownalert/-/react-native-dropdownalert-3.3.0.tgz#fd22ac8aa5f84901e413235238636d4cbfd44631"
+react-native-easy-toast@^1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/react-native-easy-toast/-/react-native-easy-toast-1.0.9.tgz#85b28ccd8f6dfb67495320a47c275d3fe163e660"
   dependencies:
-    prop-types "15.5.10"
+    prop-types "^15.5.10"
 
 react-native-scrollable-tab-view@^0.8.0:
   version "0.8.0"

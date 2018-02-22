@@ -8,17 +8,17 @@ import {
     Dimensions,
     TouchableNativeFeedback
 } from 'react-native'
-import { connect } from 'react-redux'
+
 import { Hideo } from 'react-native-textinput-effects'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 
-import * as userActions from '../actions/userActions'
+
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-class LoginView extends Component {
+export default class LoginView extends React.PureComponent {
 
     constructor(props) {
         super(props)
@@ -29,15 +29,6 @@ class LoginView extends Component {
     }
 
 
-    componentWillReceiveProps(props) {
-
-        if (props.isSucc) {
-
-        } else {
-            // this.dropdown.alertWithType('error', 'Error', '1111');
-        }
-
-    }
 
     render() {
         return (
@@ -69,7 +60,7 @@ class LoginView extends Component {
                     />
                 </View>
 
-                <TouchableNativeFeedback background={TouchableNativeFeedback.Ripple('rgba(52,52,52,0.5)', true)}  onPress={() => this.props.login(this.state.user, this.state.pwd)}>
+                <TouchableNativeFeedback key='login' background={TouchableNativeFeedback.Ripple('rgba(52,52,52,0.5)', true)}  onPress={() => console.log(1111)}>
 
                     <View style={styles.loginWarpper}>
                     <Text style={styles.loginText}>登 录</Text>
@@ -118,16 +109,4 @@ const styles = StyleSheet.create({
 })
 
 
-
-const mapState = (state) => ({
-    isSucc: state.user.isSucc,
-    data: state.user.data
-})
-
-const dispatchAction = (dispatch) => ({
-    login: (user, pwd) => dispatch(userActions.login(user, pwd))
-})
-
-
-export default connect(mapState, dispatchAction)(LoginView)
 

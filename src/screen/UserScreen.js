@@ -8,53 +8,72 @@ import {
   TouchableNativeFeedback,
   StatusBar
 } from "react-native";
+import { connect } from 'react-redux'
 import Icon from "react-native-vector-icons/Ionicons";
 import Carousel from "react-native-banner-carousel";
-import DropdownAlert from "react-native-dropdownalert";
+import Toast, { DURATION } from 'react-native-easy-toast'
 
 import LoginView from "./LoginView";
 import RegisterView from "./RegisterView";
+import * as userActions from '../actions/userActions'
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-class LoginScreen extends Component {
-  static navigationOptions = {
-    title: "登录",
-    header: null,
-    headerTintColor: "white",
-    headerStyle: {
-      backgroundColor: "#e91e63"
-    },
+class UserScreen extends React.PureComponent {
 
-    headerTitleStyle: {
-      color: "white"
+
+
+  componentWillReceiveProps(props) {
+   
+    if (props.isLogin) {
+
+      if (props.isLoginSucc) {
+
+      } else {
+        this.refs.toast.show(props.loginData, DURATION.LENGTH_SHORT);
+      }
+    } else {
+
+      if (props.isRegisterSucc) {
+
+      } else {
+
+        this.refs.toast.show(props.registerData, DURATION.LENGTH_SHORT);
+      }
     }
-  };
+
+
+  }
+
+
+
+  _goBack = () => this.props.navigation.goBack()
+
 
   render() {
     return (
       <View style={styles.contentWarpper}>
-        <DropdownAlert ref={ref => (this.dropdown = ref)} />
+
         <View style={styles.closeWarpper}>
           <TouchableNativeFeedback
             background={TouchableNativeFeedback.Ripple(
               "rgba(52,52,52,0.5)",
               true
             )}
-            onPress={() => this.props.navigation.goBack()}
+            onPress={this._goBack}
           >
-            <View style={{height:40,width:40,borderRadius:20}}>
-            <Icon
-              style={{ marginHorizontal: 8 }}
-              name="md-close"
-              size={40}
-              color="#e91e63"
-              backgroundColor="#00000000"
-            />
+            <View style={{ height: 40, width: 40, borderRadius: 20 }}>
+              <Icon
+                style={{ marginHorizontal: 8 }}
+                name="md-close"
+                size={40}
+                color="#e91e63"
+                backgroundColor="#00000000"
+              />
 
             </View>
-            
+
           </TouchableNativeFeedback>
         </View>
 
@@ -66,14 +85,16 @@ class LoginScreen extends Component {
             pageSize={windowWidth * 0.8}
           >
             <View key="login" style={styles.content}>
-              <LoginView />
+              <LoginView {...this.props} />
             </View>
 
             <View key="register" style={styles.content}>
-              <RegisterView />
+              <RegisterView {...this.props} />
             </View>
           </Carousel>
         </View>
+
+        <Toast ref="toast" style={{ backgroundColor: 'rgba(0,0,0,0.7)' }} />
       </View>
     );
   }
@@ -129,4 +150,26 @@ const styles = StyleSheet.create({
   }
 });
 
-export default LoginScreen;
+
+
+const mapState = (state) => ({
+  isLogin: state.user.isLogin,
+  isRegisterSucc: state.user.isRegisterSucc,
+  registerData: state.user.registerData,
+  isLoginSucc: state.user.isLoginSucc,
+  loginData: state.user.loginData
+})
+
+const dispatchAction = (dispatch) => ({
+  register: (user, pwd) => dispatch(userActions.register(user, pwd, pwd)),
+  login: (user, pwd) => dispatch(userActions.login(user, pwd))
+})
+
+
+
+
+export default connect(mapState, dispatchAction)(UserScreen)
+
+
+
+

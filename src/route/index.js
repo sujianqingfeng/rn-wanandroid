@@ -3,7 +3,7 @@ import { StackNavigator, DrawerNavigator } from 'react-navigation';
 
 import WelcomeScreen from '../screen/WelcomeScreen'
 import HomeScreen from '../screen/HomeScreen'
-import LoginScreen from '../screen/LoginScreen'
+import LoginScreen from '../screen/UserScreen'
 import UserDrawer from '../screen/UserDrawer'
 import SystemDetailScreen from '../screen/SystemDetailScreen'
 import SystemView from '../screen/SystemView'
