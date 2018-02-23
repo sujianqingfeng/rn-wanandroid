@@ -1,16 +1,13 @@
-import { StackNavigator, DrawerNavigator } from 'react-navigation';
-
-
-import WelcomeScreen from '../screen/WelcomeScreen'
-import HomeScreen from '../screen/HomeScreen'
-import LoginScreen from '../screen/UserScreen'
-import UserDrawer from '../screen/UserDrawer'
-import SystemDetailScreen from '../screen/SystemDetailScreen'
-import SystemView from '../screen/SystemView'
 import ArticleDetailSceen from '../screen/ArticleDetailSceen'
-import SearchScreen from '../screen/SearchScreen'
+import HomeScreen from '../screen/HomeScreen'
 import SearchResultScreen from '../screen/SearchResultScreen'
-
+import SearchScreen from '../screen/SearchScreen'
+import SystemDetailScreen from '../screen/SystemDetailScreen'
+import ThemeScreen from '../screen/ThemeScreen'
+import UserDrawer from '../screen/UserDrawer'
+import LoginScreen from '../screen/UserScreen'
+import WelcomeScreen from '../screen/WelcomeScreen'
+import { DrawerNavigator, StackNavigator } from 'react-navigation';
 
 const NavHome = StackNavigator({
     welcome: {
@@ -18,7 +15,7 @@ const NavHome = StackNavigator({
         navigationOptions:{
             header:null
         }
-       
+
     },
     home: {
         screen: HomeScreen,
@@ -52,6 +49,12 @@ const NavHome = StackNavigator({
     },
     search_result:{
         screen:SearchResultScreen,
+        navigationOptions:{
+            header:null
+        }
+    },
+    theme:{
+        screen:ThemeScreen,
         navigationOptions:{
             header:null
         }

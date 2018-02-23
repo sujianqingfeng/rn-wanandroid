@@ -1,17 +1,16 @@
+import * as collectActions from '../actions/collectActions'
+import PropTypes from "prop-types";
 import React from "react";
 import {
-  Text,
-  View,
-  StyleSheet,
   Dimensions,
-  TouchableNativeFeedback
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  View
 } from "react-native";
-import PropTypes from "prop-types";
 import Icon from "react-native-vector-icons/Ionicons";
 import { connect } from 'react-redux'
 
-
-import * as collectActions from '../actions/collectActions'
 const windowWidth = Dimensions.get("window").width
 
 class ArticleItemView extends React.PureComponent {
@@ -19,7 +18,7 @@ class ArticleItemView extends React.PureComponent {
     item: PropTypes.object.isRequired,
     hide: PropTypes.bool.isRequired,
     navigation: PropTypes.object.isRequired,
-    outline:PropTypes.bool
+    outline:PropTypes.bool,
   };
 
 
@@ -27,32 +26,49 @@ class ArticleItemView extends React.PureComponent {
     outline:true
   }
 
+  constructor(props){
+    super(props)
 
-  componentWillReceiveProps = (nextProps) => {
-    if(nextProps.isAddInSite){
-      
+    this.state = {
+      likeIcon:(props.item.collect||!props.outline)?'md-heart':'md-heart-outline'
     }
   }
-  
-  _requestAction = (bool,id)=>{
 
-    if(bool){
 
-    }else{
-      this.props.postAddCollectInSite(id)
+  componentWillReceiveProps = (nextProps) => {
+
+    if(nextProps.isAddInSite){
+      nextProps.message('收藏成功')
+      this.setState({likeIcon:'md-heart'})
+    }else if (nextProps.isCancelInA) {
+      this.setState({likeIcon:'md-heart-outline'})
+    }else if (nextProps.isCancelInM) {
+      this.setState({likeIcon:'md-heart-outline'})
     }
-   
+  }
 
+  _requestAction = (bool,item)=>{
+  this.setState({likeIcon:'md-heart'})
+    // const {outline,postAddCollectInSite,postCancelCollectInArticle,postCancelCollectInMy} = this.props
+    //
+    // if(bool){
+    //   if(!outline){
+    //     postCancelCollectInMy(item.id)
+    //   }else {
+    //     postCancelCollectInArticle(item.id)
+    //   }
+    // }else{
+    //   postAddCollectInSite(item.id)
+    // }
   }
 
   render() {
-    const { hide,outline } = this.props;
+    const { hide,outline} = this.props;
     const { item } = this.props.item;
-    
+    const {likeIcon} = this.state
     return (
       <TouchableNativeFeedback
-        onPress={() => this.props.navigation.navigate("article_detail", item)}
-      >
+        onPress={() => this.props.navigation.navigate("article_detail", item)}  >
         <View style={styles.itemView}>
           {hide ? (
             <View />
@@ -73,19 +89,12 @@ class ArticleItemView extends React.PureComponent {
           </View>
 
           <TouchableNativeFeedback
-            background={TouchableNativeFeedback.Ripple(
-              "rgba(52,52,52,0.5)",
-              true
-            )}
-            onPress={() =>this._requestAction(item.collect||!outline,item.id)}
-          >
-            <View style={{ height: 30, width: 30, borderRadius: 15,marginRight:8 }}>
+            background={TouchableNativeFeedback.Ripple("rgba(52,52,52,0.5)",true)}
+            onPress={() =>this._requestAction(item.collect||!outline,item)}>
+            <View style={{ height: 30, width: 30, borderRadius: 15,marginRight:8,justifyContent:'center',alignItems:'center' }}>
               <Icon
-               
-                name={(item.collect||!outline)?'md-heart':'md-heart-outline'}
-                size={30}
-                color="#e91e63"
-              />
+                name={likeIcon}
+                size={30} color="#e91e63"/>
             </View>
           </TouchableNativeFeedback>
         </View>
@@ -149,11 +158,14 @@ const styles = StyleSheet.create({
 });
 
 
-
 export default connect((state) => ({
-  isAddInSite: state.collect.isAddInSite
+  isAddInSite: state.collect.isAddInSite,
+  isCancelInA:state.collect.isCancelInA,
+  isCancelInM:state.collect.isCancelInM
 }),
   (dispatch) => ({
-    postAddCollectInSite: (id)=>dispatch(collectActions.postAddCollectInSite(id))
+    postAddCollectInSite: (id)=>dispatch(collectActions.postAddCollectInSite(id)),
+    postCancelCollectInArticle:(id)=>dispatch(collectActions.postCancelCollectInArticle(id)),
+    postCancelCollectInMy:(id)=>dispatch(collectActions.postCancelCollectInMy(id))
   })
 )(ArticleItemView)

@@ -1,13 +1,12 @@
-import { connect } from "react-redux";
-import { addNavigationHelpers } from "react-navigation";
-import React, { Component } from 'react';
-
 import AppNavigator from './route'
+import React, { Component } from 'react';
+import { addNavigationHelpers } from "react-navigation";
+import { connect } from "react-redux";
 
 const mapStateToProps = (state) => ({
     nav: state.nav
 });
-  
+
 class AppNav extends Component<{}> {
     render() {
         return (
@@ -20,7 +19,7 @@ class AppNav extends Component<{}> {
         );
     }
   }
-  
+
 const AppWithNavigationState = connect(mapStateToProps)(AppNav);
 
 export default AppWithNavigationState

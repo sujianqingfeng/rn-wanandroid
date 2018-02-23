@@ -1,19 +1,16 @@
-import { connect } from 'react-redux'
+import * as homeActions from '../actions/homeActions'
+import ArticleItemView from './ArticleItemView'
 import React, { Component } from 'react'
 import {
-    Image,
-    Text,
-    View,
+    Dimensions,
     FlatList,
+    Image,
     StyleSheet,
-    Dimensions
+    Text,
+    View
 } from 'react-native'
-
 import Carousel from 'react-native-banner-carousel'
-
-import ArticleItemView from './ArticleItemView'
-import * as homeActions from '../actions/homeActions'
-
+import { connect } from 'react-redux'
 
 const BannerWidth = Dimensions.get('window').width
 const BannerHeight = 260;
@@ -41,7 +38,6 @@ class HomeView extends Component {
 
     componentWillReceiveProps(props) {
         let array = []
-
         if (props.data) {
             array = this.state.dataArray.concat(props.data.datas)
 
@@ -54,6 +50,7 @@ class HomeView extends Component {
         if (props.banner) {
             bannerArray = props.banner
         }
+
         this.setState({
             dataArray: array,
             refreshing: false,
@@ -71,14 +68,10 @@ class HomeView extends Component {
                 autoplayTimeout={5000}
                 loop
                 index={0}
-
-                pageSize={BannerWidth - 16}
-            >
+                pageSize={BannerWidth - 16}>
                 {this.state.bannerArray.length > 0 ? this.state.bannerArray.map((image, index) => this._renderPage(image, index)) : <View></View>}
             </Carousel>
-
         </View>
-
     )
 
     _renderPage(image, index) {
@@ -89,7 +82,7 @@ class HomeView extends Component {
                     <Text style={styles.text}>{image.title}</Text>
                 </View>
             </View>
-        );
+        )
     }
 
     _onEndReached = () => {
@@ -120,23 +113,21 @@ class HomeView extends Component {
     _keyExtractor = (item, index) => index;
 
     render() {
-
         const { dataArray } = this.state
+        const {navigation,message}  = this.props
+
         return (
             <View>
                 <FlatList
                     data={dataArray}
-                    renderItem={(item) => <ArticleItemView  navigation={this.props.navigation} hide={false} item={item} />}
+                    renderItem={(item) => <ArticleItemView  message={message} navigation={navigation} hide={false} item={item} />}
                     ListHeaderComponent={this._headView}
                     keyExtractor={this._keyExtractor}
                     onEndReachedThreshold={0.1}
                     onEndReached={this._onEndReached}
                     refreshing={this.state.refreshing}
-                    onRefresh={this._renderRefresh}
-                />
-
+                    onRefresh={this._renderRefresh}/>
             </View>
-
         )
     }
 }
@@ -209,9 +200,9 @@ export default connect((state) => ({
     banner: state.home.banner
 }),
     (dispatch) => ({
-        getHomeList: (num) => {
+        getHomeList: (num) =>
             dispatch(homeActions.getHome(num))
-        },
+        ,
         getBanner: () => dispatch(homeActions.getHomeBanner())
     })
 )(HomeView)

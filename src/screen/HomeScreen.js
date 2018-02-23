@@ -1,30 +1,24 @@
+import HeaderBar from './HeaderBar'
+import Homeview from './HomeView'
+import LikeView from './LikeView'
+import ProjeceView from './ProjectView'
+import SystemView from './SystemView'
 import React, { Component } from 'react'
 import {
-    Image,
-    Text,
     Button,
     Dimensions,
+    Image,
     StatusBar,
+    Text,
     View
 } from 'react-native'
-
-
+import Toast, { DURATION } from 'react-native-easy-toast'
 import TabNavigator from 'react-native-tab-navigator'
 import Icon from 'react-native-vector-icons/Ionicons'
-
-
-
-import Homeview from './HomeView'
-import SystemView from './SystemView'
-import ProjeceView from './ProjectView'
-import LikeView from './LikeView'
-import HeaderBar from './HeaderBar'
 
 const windowWidth = Dimensions.get('window').width;
 
 class HomeScreen extends Component {
-
-
 
     constructor(props) {
         super(props);
@@ -32,18 +26,12 @@ class HomeScreen extends Component {
             selectedTab: 'home',
             title: '首页'
         }
-
     }
 
-    static navigationOptions = ({ navigation }) => {
 
-    
-        return {
-            header: null
-        }
-
+    _message = (message)=>{
+       this.refs.toast.show(message, DURATION.LENGTH_SHORT);
     }
-
 
     render() {
 
@@ -57,9 +45,9 @@ class HomeScreen extends Component {
                         renderSelectedIcon={() => <Icon name='md-list' size={25} color='#e91e63' />}
                         onPress={() => {
                             this.setState({ selectedTab: 'home',title: '首页'  })
-                          
+
                         }}>
-                        <Homeview navigation={this.props.navigation} />
+                        <Homeview navigation={this.props.navigation} message={this._message} />
                     </TabNavigator.Item>
 
                     <TabNavigator.Item
@@ -79,7 +67,7 @@ class HomeScreen extends Component {
                         renderSelectedIcon={() => <Icon name='md-flame' size={25} color='#e91e63' />}
                         onPress={() => {
                             this.setState({ selectedTab: 'project',title: '项目'  })
-                        
+
                         }}>
                         <ProjeceView navigation={this.props.navigation}/>
                     </TabNavigator.Item>
@@ -96,6 +84,14 @@ class HomeScreen extends Component {
                     </TabNavigator.Item>
 
                 </TabNavigator>
+
+                <View style={{
+                  width:windowWidth,
+                  position: "absolute",
+                  left: 0,
+                  top:0}}>
+                  <Toast ref="toast" style={{ backgroundColor: 'rgba(0,0,0,0.7)' }} />
+                </View>
             </View>
 
 
