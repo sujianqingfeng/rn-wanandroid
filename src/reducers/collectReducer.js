@@ -23,6 +23,13 @@ export default handleActions({
             }
         }
     },
-
+    [collectTypes.FETCH_ADD_IN_SITE_DOING]:{
+        next(state,action){
+            return {
+                ...state,
+                isAddInSite: false
+            }
+        }
+    }
 
 }, defaultStatus)

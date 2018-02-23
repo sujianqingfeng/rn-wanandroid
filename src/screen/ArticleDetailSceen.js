@@ -18,13 +18,6 @@ export class ActicleDetailScreen extends React.PureComponent {
     }
 
 
-    static navigationOptions = {
-
-        header: null,
-
-    }
-
-
     render() {
         return (
 

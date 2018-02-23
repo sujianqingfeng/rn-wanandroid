@@ -36,7 +36,6 @@ class ArticleItemView extends React.PureComponent {
 
 
   componentWillReceiveProps = (nextProps) => {
-
     if(nextProps.isAddInSite){
       nextProps.message('收藏成功')
       this.setState({likeIcon:'md-heart'})
@@ -47,19 +46,20 @@ class ArticleItemView extends React.PureComponent {
     }
   }
 
+
   _requestAction = (bool,item)=>{
-  this.setState({likeIcon:'md-heart'})
-    // const {outline,postAddCollectInSite,postCancelCollectInArticle,postCancelCollectInMy} = this.props
-    //
-    // if(bool){
-    //   if(!outline){
-    //     postCancelCollectInMy(item.id)
-    //   }else {
-    //     postCancelCollectInArticle(item.id)
-    //   }
-    // }else{
-    //   postAddCollectInSite(item.id)
-    // }
+ 
+    const {outline,postAddCollectInSite,postCancelCollectInArticle,postCancelCollectInMy} = this.props
+    
+    if(bool){
+      if(!outline){
+        postCancelCollectInMy(item.id)
+      }else {
+        postCancelCollectInArticle(item.id)
+      }
+    }else{
+      postAddCollectInSite(item.id)
+    }
   }
 
   render() {
