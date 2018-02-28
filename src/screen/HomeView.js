@@ -7,7 +7,8 @@ import {
     Image,
     StyleSheet,
     Text,
-    View
+    View,
+    TouchableNativeFeedback
 } from 'react-native'
 import Carousel from 'react-native-banner-carousel'
 import { connect } from 'react-redux'
@@ -75,13 +76,21 @@ class HomeView extends Component {
     )
 
     _renderPage(image, index) {
+
+        const {navigation,isLogin} = this.props
+
+        const params = {...image,isLogin:isLogin}
+     
+
         return (
-            <View key={index} style={{ borderRadius: 5 }}>
-                <Image style={{ width: BannerWidth - 16, height: BannerHeight, borderRadius: 5 }} source={{ uri: image.imagePath }} />
-                <View style={styles.textWarpper}>
-                    <Text style={styles.text}>{image.title}</Text>
+            <TouchableNativeFeedback key={index}  onPress={()=>navigation.navigate("article_detail", params)}>
+                <View style={{ borderRadius: 5 }}>
+                    <Image style={{ width: BannerWidth - 16, height: BannerHeight, borderRadius: 5 }} source={{ uri: image.imagePath }} />
+                    <View style={styles.textWarpper}>
+                        <Text style={styles.text}>{image.title}</Text>
+                    </View>
                 </View>
-            </View>
+            </TouchableNativeFeedback>
         )
     }
 
@@ -110,23 +119,22 @@ class HomeView extends Component {
     };
 
 
-    _keyExtractor = (item, index) => index;
 
     render() {
         const { dataArray } = this.state
-        const {navigation,message}  = this.props
+        const { navigation, message, isLogin } = this.props
 
         return (
             <View>
                 <FlatList
                     data={dataArray}
-                    renderItem={(item) => <ArticleItemView  message={message} navigation={navigation} hide={false} item={item} />}
+                    renderItem={(item, index) => <ArticleItemView isLogin={isLogin} message={message} navigation={navigation} hide={false} item={item} />}
                     ListHeaderComponent={this._headView}
-                    keyExtractor={this._keyExtractor}
+                    keyExtractor={(item, index) => index}
                     onEndReachedThreshold={0.1}
                     onEndReached={this._onEndReached}
                     refreshing={this.state.refreshing}
-                    onRefresh={this._renderRefresh}/>
+                    onRefresh={this._renderRefresh} />
             </View>
         )
     }

@@ -21,6 +21,22 @@ export default handleActions({
             }
         }
     },
+    [likeTypes.FETCH_LIKE_DOING]: {
+        next(state, action) {
+            return {
+                ...state,
+                isSucc: false             
+            }
+        }
+    },
+    [likeTypes.FETCH_LIKE_ERROR]: {
+        next(state, action) {
+            return {
+                ...state,
+                isSucc: false
+            }
+        }
+    },
 
 
 }, defaultStatus)

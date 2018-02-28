@@ -1,3 +1,4 @@
+import * as likeActions from "../actions/likeActions"
 import HeaderBar from './HeaderBar'
 import Homeview from './HomeView'
 import LikeView from './LikeView'
@@ -15,6 +16,7 @@ import {
 import Toast, { DURATION } from 'react-native-easy-toast'
 import TabNavigator from 'react-native-tab-navigator'
 import Icon from 'react-native-vector-icons/Ionicons'
+import { connect } from "react-redux";
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -28,6 +30,10 @@ class HomeScreen extends Component {
         }
     }
 
+    componentWillMount(){
+        this.props.getLikeList(0)
+    }
+
 
     _message = (message)=>{
        this.refs.toast.show(message, DURATION.LENGTH_SHORT);
@@ -35,29 +41,25 @@ class HomeScreen extends Component {
 
     render() {
 
+        const {navigation,isLogin} = this.props
         return (
             <View style={{flex: 1,}} >
-                <HeaderBar navigation={this.props.navigation} rightIcon='md-search' rightAction={()=>this.props.navigation.navigate('search')} title={this.state.title} leftIcon='md-menu' isGoBank={false} screenName='DrawerToggle' />
+                <HeaderBar navigation={navigation} rightIcon='md-search' rightAction={()=>navigation.navigate('search')} title={this.state.title} leftIcon='md-menu' isGoBank={false} screenName='DrawerToggle' />
                 <TabNavigator  >
                     <TabNavigator.Item
                         selected={this.state.selectedTab === 'home'}
                         renderIcon={() => <Icon name='md-list' size={25} color='gray' />}
                         renderSelectedIcon={() => <Icon name='md-list' size={25} color='#e91e63' />}
-                        onPress={() => {
-                            this.setState({ selectedTab: 'home',title: '首页'  })
-
-                        }}>
-                        <Homeview navigation={this.props.navigation} message={this._message} />
+                        onPress={() => this.setState({ selectedTab: 'home',title: '首页'  })}>
+                        <Homeview navigation={navigation} isLogin={isLogin} message={this._message} />
                     </TabNavigator.Item>
 
                     <TabNavigator.Item
                         selected={this.state.selectedTab === 'system'}
                         renderIcon={() => <Icon name='md-book' size={25} color='gray' />}
                         renderSelectedIcon={() => <Icon name='md-book' size={25} color='#e91e63' />}
-                        onPress={() => {
-                            this.setState({ selectedTab: 'system',title: '体系' })
-                        }}>
-                        <SystemView navigation={this.props.navigation} />
+                        onPress={() => this.setState({ selectedTab: 'system',title: '体系' })}>
+                        <SystemView navigation={navigation} />
                     </TabNavigator.Item>
 
 
@@ -65,11 +67,8 @@ class HomeScreen extends Component {
                         selected={this.state.selectedTab === 'project'}
                         renderIcon={() => <Icon name='md-flame' size={25} color='gray' />}
                         renderSelectedIcon={() => <Icon name='md-flame' size={25} color='#e91e63' />}
-                        onPress={() => {
-                            this.setState({ selectedTab: 'project',title: '项目'  })
-
-                        }}>
-                        <ProjeceView navigation={this.props.navigation}/>
+                        onPress={() => this.setState({ selectedTab: 'project',title: '项目'  })}>
+                        <ProjeceView navigation={navigation} isLogin={isLogin}/>
                     </TabNavigator.Item>
 
 
@@ -77,10 +76,8 @@ class HomeScreen extends Component {
                         selected={this.state.selectedTab === 'like'}
                         renderIcon={() => <Icon name='md-bookmarks' size={25} color='gray' />}
                         renderSelectedIcon={() => <Icon name='md-bookmarks' size={25} color='#e91e63' />}
-                        onPress={() => {
-                            this.setState({ selectedTab: 'like',title: '收藏' })
-                        }}>
-                        <LikeView navigation={this.props.navigation}/>
+                        onPress={() => this.setState({ selectedTab: 'like',title: '收藏' })}>
+                        <LikeView navigation={navigation} isLogin={isLogin} />
                     </TabNavigator.Item>
 
                 </TabNavigator>
@@ -102,4 +99,12 @@ class HomeScreen extends Component {
 
 }
 
-export default HomeScreen;
+const mapState = state => ({
+  isLogin: state.like.isSucc,
+});
+
+const dispatchAction = dispatch => ({
+  getLikeList: page => dispatch(likeActions.getLikeList(page))
+});
+
+export default connect(mapState, dispatchAction)(HomeScreen);

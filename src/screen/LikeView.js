@@ -29,9 +29,14 @@ class LikeView extends Component {
 
   componentWillMount() {
     this.props.getLikeList(this.state.page);
+
   }
 
   componentWillReceiveProps = nextProps => {
+
+    if(!nextProps.isLogin)
+      return
+
     let array = [];
 
     if (nextProps.data) {
@@ -67,23 +72,23 @@ class LikeView extends Component {
       <ArticleItemView  navigation={this.props.navigation} hide={false} item={data} outline={false}/>
     )
   }
-  ;
-
-  _keyExtractor = (item, index) => index;
-
-  
+    
 
   render() {
 
     const sections =  [this.state.setionOneData]
+    const {isLogin} = this.props
+
+
+    const content = isLogin ? (<SectionList
+    keyExtractor={(item, index) => index}
+     renderSectionHeader={this._renderSectionHeader}
+     showsVerticalScrollIndicator={false}
+    sections={sections}/>):<Text style={styles.hintText}>亲，没有登录</Text>
+
     return (
-      <View style={{ flex: 1 }}>
-        <SectionList
-         keyExtractor={this._keyExtractor}
-          renderSectionHeader={this._renderSectionHeader}
-          showsVerticalScrollIndicator={false}
-          sections={sections}
-        />
+      <View style={{ flex: 1}}>
+       {content}
       </View>
     );
   }
@@ -110,6 +115,11 @@ const styles = StyleSheet.create({
     marginTop: 4,
     marginRight: 16,
     fontSize: 15
+  },
+  hintText:{
+    justifyContent:'center',
+    alignItems: 'center',
+    alignSelf: 'center',
   }
 });
 

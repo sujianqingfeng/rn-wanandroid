@@ -1,22 +1,16 @@
-import {createAction} from 'redux-actions'
-
-
-import HttpUtil from '../utils/HttpUtil'
 import  * as likeTypes from '../constants/likeTypes'
-
-
-
+import HttpUtil from '../utils/HttpUtil'
+import {createAction} from 'redux-actions'
 
 function getLikeList(page){
 
     return dispatch=>{
+        dispatch(createAction(likeTypes.FETCH_LIKE_DOING)())
         HttpUtil.get('/lg/collect/list/'+page+'/json')
         .then(res=>dispatch(createAction(likeTypes.FETCH_LIKE_DONE)(res.data)))
+        .catch(error=>dispatch(createAction(likeTypes.FETCH_LIKE_ERROR)()))
     }
 }
-
-
-
 
 
 export{

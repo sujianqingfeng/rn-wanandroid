@@ -6,14 +6,15 @@ import {
     View,
     FlatList,
     Dimensions,
-    Image
+    Image,
+    TouchableNativeFeedback
 } from 'react-native'
 
 
 import Icon from 'react-native-vector-icons/Ionicons'
 
 const WidthWidth = Dimensions.get('window').width;
-
+import * as collectActions from '../actions/collectActions'
 
 import * as projectActions from '../actions/projectActions'
 
@@ -33,7 +34,7 @@ class ProjectView extends React.Component {
         this.props.getProjectList(this.state.page)
     }
 
-  
+
 
 
     componentWillReceiveProps(props) {
@@ -53,6 +54,18 @@ class ProjectView extends React.Component {
         })
     }
 
+
+    changeIcon = (index,bool)=>{
+        let dataArray = this.state.dataArray
+        dataArray[index]['collect']= bool
+
+        console.log(dataArray)
+        this.setState({dataArray:dataArray})
+    }
+
+
+    
+  
 
     _onEndReached = () => {
         let data = this.props.data
@@ -79,37 +92,49 @@ class ProjectView extends React.Component {
     };
 
 
-    _renderItem = ({ item }) => (
-        <View style={styles.itemWarpper}>
-            <View>
-                <Image style={{width:100,height:180}} source={{ uri: item.envelopePic }} />
-            </View>
+    _goToDetail = (item)=>{
+        const {navigation,isLogin} = this.props
+        const params = {...item,isLogin:isLogin}
+        navigation.navigate("article_detail", params)
+    }
 
-            <View style={styles.itemContentWarpper}>
 
-                <View style={styles.titleWarpper}>
-                    <Text style={styles.title} numberOfLines={1} ellipsizeMode='tail'>{item.title}</Text>
-                    <Text style={styles.desc} numberOfLines={5} ellipsizeMode='tail' >{item.desc}</Text>
+    _renderItem = ({ item,index }) => (
+        <TouchableNativeFeedback onPress={()=>this._goToDetail(item)}>
+            <View style={styles.itemWarpper}>
+                <View>
+                    <Image style={{ width: 100, height: 180 }} source={{ uri: item.envelopePic }} />
                 </View>
-              
 
-                <View style={styles.bottomWarpper}>
-                    <View style={styles.infoWarpper}>
-                        <Text>{item.author}</Text>
-                        <Text>{item.niceDate}</Text>
+                <View style={styles.itemContentWarpper}>
+
+                    <View style={styles.titleWarpper}>
+                        <Text style={styles.title} numberOfLines={1} ellipsizeMode='tail'>{item.title}</Text>
+                        <Text style={styles.desc} numberOfLines={5} ellipsizeMode='tail' >{item.desc}</Text>
                     </View>
-                    <View style={styles.likeWarpper}>
-                        <Icon
-                            style={{ marginHorizontal: 8 }}
-                            name='md-heart-outline'
-                            size={30}
-                            color='#e91e63'
-                            backgroundColor='#00000000' />
+
+
+                    <View style={styles.bottomWarpper}>
+                        <View style={styles.infoWarpper}>
+                            <Text>{item.author}</Text>
+                            <Text>{item.niceDate}</Text>
+                        </View>
+                        <TouchableNativeFeedback background={TouchableNativeFeedback.Ripple("rgba(52,52,52,0.5)", true)}
+                        onPress={()=>this.changeIcon(index,true)}>
+                            <View style={styles.likeWarpper}>
+                                <Icon
+                                    style={{ marginHorizontal: 8 }}
+                                    name={item.collect?'md-heart':'md-heart-outline'}
+                                    size={30}
+                                    color='#e91e63'
+                                    backgroundColor='#00000000' />
+                            </View>
+                        </TouchableNativeFeedback>
                     </View>
                 </View>
-            </View>
 
-        </View>
+            </View>
+        </TouchableNativeFeedback>
     )
 
     _keyExtractor = (item, index) => index
@@ -123,7 +148,7 @@ class ProjectView extends React.Component {
         return (
             <View style={styles.textWarpper}>
 
-                 <FlatList
+                <FlatList
                     data={this.state.dataArray}
                     renderItem={this._renderItem}
                     keyExtractor={this._keyExtractor}
@@ -133,7 +158,7 @@ class ProjectView extends React.Component {
                     onRefresh={this._renderRefresh}
                 />
 
-               
+
             </View>
         )
     }
@@ -148,34 +173,34 @@ const styles = StyleSheet.create({
     itemWarpper: {
         flexDirection: 'row',
         height: 180,
-        width: WidthWidth-16,
+        width: WidthWidth - 16,
         backgroundColor: 'white',
         borderRadius: 5,
         margin: 8,
     },
-    itemContentWarpper:{
-        marginHorizontal:16,
-        marginVertical:8,
-        width: WidthWidth-148,
+    itemContentWarpper: {
+        marginHorizontal: 16,
+        marginVertical: 8,
+        width: WidthWidth - 148,
     },
-    titleWarpper:{
+    titleWarpper: {
         flex: 1,
     },
-    title:{
+    title: {
         fontSize: 16,
         fontWeight: 'bold',
     },
-    desc:{
+    desc: {
     },
-    bottomWarpper:{
+    bottomWarpper: {
         flexDirection: 'row',
         marginVertical: 8,
     },
-    infoWarpper:{
-        flex:1,
+    infoWarpper: {
+        flex: 1,
         alignSelf: 'flex-start'
     },
-    likeWarpper:{
+    likeWarpper: {
         alignSelf: 'flex-end',
     }
 })
@@ -184,11 +209,14 @@ const styles = StyleSheet.create({
 
 const mapState = (state) => ({
     isSucc: state.project.isSucc,
-    data: state.project.data
+    data: state.project.data,
+    isAddInSite: state.collect.isAddInSite,
 })
 
 const dispatchAction = (dispatch) => ({
-    getProjectList: (page) => dispatch(projectActions.getProjectList(page))
+    postAddCollectInSite: (id)=>dispatch(collectActions.postAddCollectInSite(id)),
+    getProjectList: (page) => dispatch(projectActions.getProjectList(page)),
+    changeIcon : (index,bool)=>dispatch(projectActions.changeIcon(index,bool))
 })
 
 
