@@ -7,9 +7,8 @@ function postAddCollectInSite(id) {
   return dispatch => {
     dispatch(createAction(collectTypes.FETCH_ADD_IN_SITE_DOING)());
     HttpUtil.post("/lg/collect/" + id + "/json", { id: id })
-    .then(res =>
-      dispatch(createAction(collectTypes.FETCH_ADD_IN_SITE_DONE)(res.data))
-    );
+    .then(res =>dispatch(createAction(collectTypes.FETCH_ADD_IN_SITE_DONE)(res.data)))
+    .catch(e=>{})
   };
 }
 

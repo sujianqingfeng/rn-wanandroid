@@ -4,26 +4,32 @@ import {
     Dimensions,
     StyleSheet,
     Text,
-    View
- } from 'react-native'
+    View,
+    Image
+} from 'react-native'
 
 const winheight = Dimensions.get('window').height
 
-export default class UserDrawer extends Component{
+export default class UserDrawer extends Component {
 
 
-    render(){
+    render() {
         return (
             <View style={styles.contentWarpper}>
 
                 <View style={styles.header}>
-
+                    <Image
+                    resizeMode='cover'
+                        style={styles.icon}
+                        source={require('./../images/background_draw.jpeg')}
+                    />
 
                 </View>
 
-                <Button title='登录' onPress={()=> this.props.navigation.navigate('login')} />
+                <Button title='登录' onPress={() => this.props.navigation.navigate('login')} />
 
-                    <Button title='主题' onPress={()=> this.props.navigation.navigate('theme')} />
+                <Button title='主题' onPress={() => this.props.navigation.navigate('theme')} />
+                <Button title='我的' onPress={() => this.props.navigation.navigate('about')} />
             </View>
         )
     }
@@ -34,11 +40,11 @@ export default class UserDrawer extends Component{
 const styles = StyleSheet.create({
 
 
-    contentWarpper:{
+    contentWarpper: {
         flex: 1,
     },
-    header:{
-        height:winheight*0.3,
+    header: {
+        height: winheight * 0.3,
         backgroundColor: 'rgba(52,52,52,0.7)',
     }
 

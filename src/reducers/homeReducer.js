@@ -4,9 +4,11 @@ import { handleActions, handleAction } from 'redux-actions';
 
 
 const defaultStatus = {
-    data: null,
-    banner: null,
-    isSucc: false
+    datas: [],
+    banners: [],
+    isSucc: false,
+    isEnd:false,
+    refreshing:false
 }
 
 
@@ -16,17 +18,32 @@ export default handleActions({
         next(state, action) {
             return {
                 ...state,
-                isSucc: false
+                isSucc: false,
+                refreshing:true
             }
         }
 
     },
     [homeTypes.FETCH_HOME_LIST_DONE]: {
         next(state, action) {
+
+            const data = action.payload
+            let datas = state.datas
+
+            if(data.curPage ==1){
+                datas = data.datas
+            }else{
+                datas = [...datas,...data.datas]
+            }
+
+            let isEnd =  data.curPage>data.pageCount
+
             return {
                 ...state,
                 isSucc: true,
-                data: action.payload
+                isEnd:isEnd,
+                refreshing:false,
+                datas: datas
             }
         }
 
@@ -36,7 +53,7 @@ export default handleActions({
             return {
                 ...state,
                 isSucc: true,
-                banner: action.payload
+                banners: action.payload
             }
         }
 

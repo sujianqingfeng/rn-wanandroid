@@ -23,10 +23,10 @@ class ThemeItemView extends React.PureComponent {
   constructor(props){
     super(props)
     this.state = {
-      isCheck:props.isCheck,
-      orgColor:props.item.item,
+      isCheck:props.item.item.check,
+      orgColor:props.item.item.color,
       background:'white',
-      checkColor:props.item.item
+      checkColor:props.item.item.color
     }
   }
 
@@ -40,35 +40,35 @@ class ThemeItemView extends React.PureComponent {
   }
 
   _chooseTheme= ()=>{
+    console.log(this.props)
+    const {changeIndex,chenkIndex} = this.props
+    const index = this.props.item.index
+    changeIndex(index)
 
-    const {index,changeIndex,chenkIndex} = this.props
-
-    if(index == changeIndex){
-
-    }else{
-      changeIndex(index)
-      this.setState({
-        isCheck:!this.state.isCheck,
-        background:this._getColor(!this.state.isCheck),
-        checkColor:this._getColor(this.state.isCheck)
-      })
-    }
-  
-
-    
+    // if(index == changeIndex){
+    //     console.log(1111)
+    // }else{
+    //   console.log(2222)
+    //   changeIndex(index)
+    //   this.setState({
+    //     isCheck:!this.state.isCheck,
+    //     background:this._getColor(!this.state.isCheck),
+    //     checkColor:this._getColor(this.state.isCheck)
+    //   })
+    // }    
   }
 
   render() {
-    const {index,chenkIndex} = this.props
-
+    const {item} = this.props.item
+   
     return (
       <TouchableNativeFeedback
         background={TouchableNativeFeedback.Ripple("rgba(52,52,52,0.5)",true)}
         onPress={this._chooseTheme}>
-        <View style={{ height: windowWidth/3-25, width: windowWidth/3-25,margin:10,borderRadius: (windowWidth/3-25)/2,justifyContent:'center',alignItems:'center',backgroundColor:index!=chenkIndex?this.state.background:'white'}}>
+        <View style={{ height: windowWidth/3-25, width: windowWidth/3-25,margin:10,borderRadius: (windowWidth/3-25)/2,justifyContent:'center',alignItems:'center',backgroundColor:item.check?item.color:'white'}}>
           <Icon
             name='md-rose'
-            size={50} color={index!=chenkIndex?this.state.checkColor:this.state.orgColor}/>
+            size={50} color={item.check?'white':item.color}/>
         </View>
       </TouchableNativeFeedback>
     )

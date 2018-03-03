@@ -31,15 +31,21 @@ class ArticleItemView extends React.PureComponent {
 
     this.state = {
       likeIcon:(props.item.collect||!props.outline)?'md-heart':'md-heart-outline',
-      item:props.item.item
+      item:props.item.item 
     }
   }
 
 
   componentWillReceiveProps = (nextProps) => {
     if(nextProps.isAddInSite){
+      console.log(nextProps)
       nextProps.message('收藏成功')
-      this.setState({likeIcon:'md-heart'})
+      // this.setState({likeIcon:'md-heart'})
+
+      let item = nextProps.item.item
+
+      item['collect'] = true
+      this.setState({item:item})
 
     }else if (nextProps.isCancelInA) {
       this.setState({likeIcon:'md-heart-outline'})
@@ -53,10 +59,10 @@ class ArticleItemView extends React.PureComponent {
 
     const {outline,postAddCollectInSite,postCancelCollectInArticle,postCancelCollectInMy,isLogin,message} = this.props
 
-    if(!isLogin){
-      message('没有登录，点击没用')
-      return
-    }
+    // if(!isLogin){
+    //   message('没有登录，点击没用')
+    //   return
+    // }
 
 
     if(bool){
@@ -101,7 +107,7 @@ class ArticleItemView extends React.PureComponent {
             onPress={() =>this._requestAction(item.collect||!outline,item)}>
             <View style={{ height: 30, width: 30, borderRadius: 15,marginRight:8,justifyContent:'center',alignItems:'center' }}>
               <Icon
-                name={likeIcon}
+                name={item.collect?'md-heart':'md-heart-outline'}
                 size={30} color="#e91e63"/>
             </View>
           </TouchableNativeFeedback>

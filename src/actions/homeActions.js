@@ -8,18 +8,11 @@ import  HttpUtil from '../utils/HttpUtil'
 
 
 function getHome(num) {
-
-
     return dispatch => {
         dispatch(createAction(homeTypes.FETCH_HOME_LIST_DOING)())
-
         let result = HttpUtil.get('/article/list/'+num+'/json')
-        .then(res=>{
-            dispatch(createAction(homeTypes.FETCH_HOME_LIST_DONE)(res.data))
-        })
-        .catch(e=>{
-            dispatch(createAction(homeTypes.FETCH_HOME_LIST_ERROR)(e))
-        })
+        .then(res=>dispatch(createAction(homeTypes.FETCH_HOME_LIST_DONE)(res.data)))
+        .catch(e=>dispatch(createAction(homeTypes.FETCH_HOME_LIST_ERROR)(e)))
     }
 }
 
@@ -30,7 +23,19 @@ function getHomeBanner(){
     }
 }
 
+
+function homeAddCollectInSite(id,index) {
+    return dispatch => {
+      HttpUtil.post("/lg/collect/" + id + "/json", { id: id })
+      .then(res =>dispatch(createAction(homeTypes.FETCH_HOME_ADD_IN_SITE_DONE)({id:id,index:index})))
+      .catch(e=>{})
+    };
+  }
+
+
+
 export {
     getHome,
-    getHomeBanner
+    getHomeBanner,
+    homeAddCollectInSite
 }

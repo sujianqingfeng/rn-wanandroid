@@ -20,13 +20,11 @@ function request(method, url, params = '') {
     if (params != '') {
         config['body'] = getFormData(params)
     }
-    const realm = RealmUtil.getRealm()
-    const cookies = realm.objects('Cookie')
-    if (cookies.length > 0) {
-        config['headers']={
-            'Cookie':cookies[0].cookie
-        }
+  
+    config['headers']={
+        'Cookie':RealmUtil.getCookie()
     }
+    
     console.log('参数', config)
 
     return new Promise((resole, reject) => {
@@ -34,15 +32,7 @@ function request(method, url, params = '') {
             .then(res => {
                 if ((res.url.indexOf('user/login')!=-1 || res.url.indexOf('user/register'))!=-1 && res.headers.map.hasOwnProperty('set-cookie')) {
                     const cookie = res.headers.map['set-cookie'][0]
-                    const realm = RealmUtil.getRealm()
-                    realm.write(() => {
-                        let cookies = realm.objects('Cookie')
-                        if (cookies.length > 0) {
-                            cookies[0].cookie = cookie
-                        } else {
-                            realm.create('Cookie', { cookie: cookie })
-                        }
-                    })
+                    RealmUtil.saveCookie(cookie)
                 }
                 return res.json()
             })

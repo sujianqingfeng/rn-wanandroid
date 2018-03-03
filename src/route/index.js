@@ -7,6 +7,7 @@ import ThemeScreen from '../screen/ThemeScreen'
 import UserDrawer from '../screen/UserDrawer'
 import LoginScreen from '../screen/UserScreen'
 import WelcomeScreen from '../screen/WelcomeScreen'
+import AboutScreen from '../screen/AboutScreen'
 import { DrawerNavigator, StackNavigator } from 'react-navigation';
 
 const NavHome = StackNavigator({
@@ -55,6 +56,12 @@ const NavHome = StackNavigator({
     },
     theme:{
         screen:ThemeScreen,
+        navigationOptions:{
+            header:null
+        }
+    },
+    about:{
+        screen:AboutScreen,
         navigationOptions:{
             header:null
         }

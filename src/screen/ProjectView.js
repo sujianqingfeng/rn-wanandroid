@@ -14,7 +14,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons'
 
 const WidthWidth = Dimensions.get('window').width;
-import * as collectActions from '../actions/collectActions'
+
 
 import * as projectActions from '../actions/projectActions'
 
@@ -23,10 +23,13 @@ class ProjectView extends React.Component {
 
     constructor(props) {
         super(props)
+        console.log(8888888888)
+        console.log(this.state)
         this.state = {
             page: 0,
             dataArray: [],
             refreshing: false,
+            clickIndex:0
         }
     }
 
@@ -35,21 +38,12 @@ class ProjectView extends React.Component {
     }
 
 
-
-
     componentWillReceiveProps(props) {
+      
         let array = []
 
-        if (props.data) {
-            array = this.state.dataArray.concat(props.data.datas)
-
-            if (this.state.page == 0) {
-                array = props.data.datas
-            }
-        }
-
         this.setState({
-            dataArray: array,
+           
             refreshing: false,
         })
     }
@@ -64,8 +58,7 @@ class ProjectView extends React.Component {
     }
 
 
-    
-  
+
 
     _onEndReached = () => {
         let data = this.props.data
@@ -98,6 +91,22 @@ class ProjectView extends React.Component {
         navigation.navigate("article_detail", params)
     }
 
+    _likeClick = (item,index)=>{
+
+        const {isLogin,message} = this.props
+
+        if(!isLogin){
+            message('请，没有登录')
+            return
+        }
+
+        if(item.collect){
+
+        }else{
+            this.props.projectAddCollectInSite(item.id,index,true)
+        }
+    }
+
 
     _renderItem = ({ item,index }) => (
         <TouchableNativeFeedback onPress={()=>this._goToDetail(item)}>
@@ -117,10 +126,10 @@ class ProjectView extends React.Component {
                     <View style={styles.bottomWarpper}>
                         <View style={styles.infoWarpper}>
                             <Text>{item.author}</Text>
-                            <Text>{item.niceDate}</Text>
+                            <Text>{item.niceDate + item.collect}</Text>
                         </View>
                         <TouchableNativeFeedback background={TouchableNativeFeedback.Ripple("rgba(52,52,52,0.5)", true)}
-                        onPress={()=>this.changeIcon(index,true)}>
+                        onPress={()=>this._likeClick(item,index)}>
                             <View style={styles.likeWarpper}>
                                 <Icon
                                     style={{ marginHorizontal: 8 }}
@@ -137,28 +146,20 @@ class ProjectView extends React.Component {
         </TouchableNativeFeedback>
     )
 
-    _keyExtractor = (item, index) => index
-
-    _renderItemSeparatorComponent = ({ highlighted }) => (
-        <View style={{ height: 1, backgroundColor: '#000' }}></View>
-    )
-
+  
+ 
     render() {
-
         return (
             <View style={styles.textWarpper}>
-
                 <FlatList
-                    data={this.state.dataArray}
+                    data={this.props.datas}
                     renderItem={this._renderItem}
-                    keyExtractor={this._keyExtractor}
+                    keyExtractor={ (item, index) => index}
                     onEndReachedThreshold={0.1}
                     onEndReached={this._onEndReached}
                     refreshing={this.state.refreshing}
                     onRefresh={this._renderRefresh}
                 />
-
-
             </View>
         )
     }
@@ -207,14 +208,14 @@ const styles = StyleSheet.create({
 
 
 
-const mapState = (state) => ({
+const mapStateToProps = (state,ownProps) => ({
     isSucc: state.project.isSucc,
-    data: state.project.data,
-    isAddInSite: state.collect.isAddInSite,
+    datas: state.project.datas,
+    status:state.project.status
 })
 
-const dispatchAction = (dispatch) => ({
-    postAddCollectInSite: (id)=>dispatch(collectActions.postAddCollectInSite(id)),
+const mapDispatchToProps = (dispatch) => ({
+    projectAddCollectInSite: (id,index,bool)=>dispatch(projectActions.postAddCollectInSite(id,index,bool)),
     getProjectList: (page) => dispatch(projectActions.getProjectList(page)),
     changeIcon : (index,bool)=>dispatch(projectActions.changeIcon(index,bool))
 })
@@ -222,5 +223,5 @@ const dispatchAction = (dispatch) => ({
 
 
 
-export default connect(mapState, dispatchAction)(ProjectView)
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectView)
 

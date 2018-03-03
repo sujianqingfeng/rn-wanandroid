@@ -1,23 +1,10 @@
-import HeaderBar from './HeaderBar'
-import ThemeItemView from './ThemeItemView'
 import React from 'react'
 import { SectionList,FlatList, Text , View,} from 'react-native'
 
-const data = [
-    "#f44336",
-    "#E91E63",
-    "#9C27B0",
-    "#673AB7",
-    "#2196F3",
-    "#00BCD4",
-    "#009688",
-    "#4CAF50",
-    "#FFEB3B",
-    "#FF9800",
-    "#795548",
-    "#9E9E9E",
-    "#607D8B"
-  ]
+import HeaderBar from './HeaderBar'
+import ThemeItemView from './ThemeItemView'
+import * as ColorConst from '../constants/ColorConst'
+
 
 class ThemeScreen extends React.Component {
 
@@ -26,14 +13,20 @@ class ThemeScreen extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      chenkIndex:1
+      chenkIndex:1,
+      colors:ColorConst.getThemeColors()
     }
   }
 
 
   _changeIndex =(index) =>{
 
-    this.setState({chenkIndex:index})
+    let colors =this.state.colors
+    let themeColors = []
+    for(const i=0;i<colors.length;i++){
+      themeColors.push({color:colors[i].color,check:i==index})
+    }
+    this.setState({colors:themeColors})
   } 
 
   render() {
@@ -42,10 +35,9 @@ class ThemeScreen extends React.Component {
           <HeaderBar  navigation={this.props.navigation} title='选择主题' />
           <FlatList
               columnWrapperStyle={{ alignItems:'center',justifyContent:'center'}}
-             
               numColumns={3}
-              data={data}
-              renderItem={(item,index) => <ThemeItemView chenkIndex={this._changeIndex} index={index}  item={item}/>}
+              data={this.state.colors}
+              renderItem={(item) => <ThemeItemView  changeIndex={this._changeIndex}  item={item}/>}
               keyExtractor={(item, index) => index}/>
       </View>
     )
