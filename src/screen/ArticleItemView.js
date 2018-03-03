@@ -19,6 +19,7 @@ class ArticleItemView extends React.PureComponent {
     hide: PropTypes.bool.isRequired,
     navigation: PropTypes.object.isRequired,
     outline:PropTypes.bool,
+    likeClick:PropTypes.func.isRequired
   };
 
 
@@ -26,60 +27,14 @@ class ArticleItemView extends React.PureComponent {
     outline:true
   }
 
-  constructor(props){
-    super(props)
-
-    this.state = {
-      likeIcon:(props.item.collect||!props.outline)?'md-heart':'md-heart-outline',
-      item:props.item.item 
-    }
-  }
 
 
-  componentWillReceiveProps = (nextProps) => {
-    if(nextProps.isAddInSite){
-      console.log(nextProps)
-      nextProps.message('收藏成功')
-      // this.setState({likeIcon:'md-heart'})
 
-      let item = nextProps.item.item
-
-      item['collect'] = true
-      this.setState({item:item})
-
-    }else if (nextProps.isCancelInA) {
-      this.setState({likeIcon:'md-heart-outline'})
-    }else if (nextProps.isCancelInM) {
-      this.setState({likeIcon:'md-heart-outline'})
-    }
-  }
-
-
-  _requestAction = (bool,item)=>{
-
-    const {outline,postAddCollectInSite,postCancelCollectInArticle,postCancelCollectInMy,isLogin,message} = this.props
-
-    // if(!isLogin){
-    //   message('没有登录，点击没用')
-    //   return
-    // }
-
-
-    if(bool){
-      if(!outline){
-        postCancelCollectInMy(item.id)
-      }else {
-        postCancelCollectInArticle(item.id)
-      }
-    }else{
-      postAddCollectInSite(item.id)
-    }
-  }
 
   render() {
-    const { hide,outline} = this.props;
-    // const { item } = this.props.item;
-    const {likeIcon,item} = this.state
+    const { hide,outline,likeClick} = this.props
+    const { item,index } = this.props.item
+ 
     return (
       <TouchableNativeFeedback
         onPress={() => this.props.navigation.navigate("article_detail", item)}  >
@@ -104,7 +59,7 @@ class ArticleItemView extends React.PureComponent {
 
           <TouchableNativeFeedback
             background={TouchableNativeFeedback.Ripple("rgba(52,52,52,0.5)",true)}
-            onPress={() =>this._requestAction(item.collect||!outline,item)}>
+            onPress={() =>likeClick(index,item)}>
             <View style={{ height: 30, width: 30, borderRadius: 15,marginRight:8,justifyContent:'center',alignItems:'center' }}>
               <Icon
                 name={item.collect?'md-heart':'md-heart-outline'}

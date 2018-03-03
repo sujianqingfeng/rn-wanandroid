@@ -27,15 +27,25 @@ function getHomeBanner(){
 function homeAddCollectInSite(id,index) {
     return dispatch => {
       HttpUtil.post("/lg/collect/" + id + "/json", { id: id })
-      .then(res =>dispatch(createAction(homeTypes.FETCH_HOME_ADD_IN_SITE_DONE)({id:id,index:index})))
+      .then(res =>dispatch(createAction(homeTypes.FETCH_HOME_ADD_IN_SITE_DONE)({index:index})))
       .catch(e=>{})
     };
   }
+
+
+  function homeCancelCollectInArticle(id,index) {
+    return dispatch => {
+      HttpUtil.post("/lg/uncollect_originId/" + id + "/json")
+      .then(res =>dispatch(createAction(homeTypes.FETCH_HOME_CANCEL_IN_ARTICLE_DONE)({index:index})));
+    };
+  }
+  
 
 
 
 export {
     getHome,
     getHomeBanner,
-    homeAddCollectInSite
+    homeAddCollectInSite,
+    homeCancelCollectInArticle
 }

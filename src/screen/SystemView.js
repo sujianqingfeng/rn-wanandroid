@@ -22,12 +22,6 @@ class SystemView extends React.Component {
         _that.props.getSystemList()
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        if (nextProps.isSucc) {
-            return true
-        }
-        return false
-    }
 
     _rederChildrenView = (item, index) => (
         <Text key={item.id} style={styles.childrenText}>{item.name}</Text>
@@ -63,12 +57,15 @@ class SystemView extends React.Component {
 
 
     render() {
+
+        const {datas,refreshing} = this.props
         return (
             <FlatList
-                data={this.props.isSucc ? this.props.data : []}
+                data={datas}
                 renderItem={this._rederItem}
                 ItemSeparatorComponent={this._renderItemSeparatorComponent}
                 keyExtractor={this._keyExtractor}
+                refreshing={refreshing}
             />
         )
     }
@@ -120,7 +117,8 @@ const styles = StyleSheet.create({
 
 const mapState = (state) => ({
     isSucc: state.system.isSucc,
-    data: state.system.data
+    datas: state.system.datas,
+    refreshing:state.system.refreshing
 })
 
 const dispatchAction = (dispatch) => ({

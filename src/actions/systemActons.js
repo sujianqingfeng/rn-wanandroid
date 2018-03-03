@@ -9,6 +9,7 @@ import HttpUtil from '../utils/HttpUtil'
 function getSystemList(){
 
     return dispatch =>{
+        dispatch(createAction(systemTypes.FETCH_SYSTEM_LIST_DOING)())
         HttpUtil.get('/tree/json')
         .then(res=> dispatch(createAction(systemTypes.FETCH_SYSTEM_LIST_DONE)(res.data)))
     }

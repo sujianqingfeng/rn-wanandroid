@@ -34,27 +34,14 @@ class HomeView extends Component {
     }
 
 
-    componentWillReceiveProps(props) {
-        // let array = []
-        // if (props.data) {
-        //     array = this.state.dataArray.concat(props.data.datas)
-
-        //     if (this.state.page == 0) {
-        //         array = props.data.datas
-        //     }
-        // }
-
-        // let bannerArray = []
-        // if (props.banner) {
-        //     bannerArray = props.banner
-        // }
-
-        // this.setState({
-        //     dataArray: array,
-        //     refreshing: false,
-        //     bannerArray: bannerArray
-        // })
+    componentWillReceiveProps = (nextProps)=>{
+        if(nextProps.likeAction==1){
+            nextProps.message('添加收藏')
+        }else if(nextProps.likeAction==2){
+            nextProps.message('取消收藏')
+        }
     }
+
 
 
     _headView = () => {
@@ -111,7 +98,23 @@ class HomeView extends Component {
     // 下拉刷新
     _renderRefresh = () => {
         this.props.getHomeList(0)
-    };
+    }
+
+    _likeClick= (index,item)=>{
+        console.log(index,item)
+        const {isLogin,message,homeAddCollectInSite,homeCancelCollectInArticle} = this.props
+        if(!isLogin){
+            message('亲，没有登陆')
+            return 
+        }
+
+        if(item.collect){
+            homeCancelCollectInArticle(item.id,index)
+        }else{
+            homeAddCollectInSite(item.id,index)
+        }
+
+    }
 
 
 
@@ -123,7 +126,7 @@ class HomeView extends Component {
             <View>
                 <FlatList
                     data={datas}
-                    renderItem={(item, index) => <ArticleItemView isLogin={isLogin} message={message} navigation={navigation} hide={false} item={item} />}
+                    renderItem={(item, index) => <ArticleItemView  likeClick={this._likeClick} isLogin={isLogin}  navigation={navigation} hide={false} item={item} />}
                     ListHeaderComponent={this._headView}
                     keyExtractor={(item, index) => index}
                     onEndReachedThreshold={0.1}
@@ -202,10 +205,13 @@ export default connect((state) => ({
     datas: state.home.datas,
     banners: state.home.banners,
     isEnd:state.home.isEnd,
-    refreshing:state.home.refreshing
+    refreshing:state.home.refreshing,
+    likeAction:state.home.likeAction
 }),
     (dispatch) => ({
         getHomeList: (num) => dispatch(homeActions.getHome(num)),
-        getBanner: () => dispatch(homeActions.getHomeBanner())
+        getBanner: () => dispatch(homeActions.getHomeBanner()),
+        homeAddCollectInSite:(id,index)=>dispatch(homeActions.homeAddCollectInSite(id,index)),
+        homeCancelCollectInArticle:(id,index)=>dispatch(homeActions.homeCancelCollectInArticle(id,index))
     })
 )(HomeView)

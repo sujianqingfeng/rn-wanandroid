@@ -8,7 +8,8 @@ const defaultStatus = {
     banners: [],
     isSucc: false,
     isEnd:false,
-    refreshing:false
+    refreshing:false,
+    likeAction:0
 }
 
 
@@ -29,9 +30,11 @@ export default handleActions({
 
             const data = action.payload
             let datas = state.datas
+            let likeAction = state.likeAction
 
             if(data.curPage ==1){
                 datas = data.datas
+                likeAction=0
             }else{
                 datas = [...datas,...data.datas]
             }
@@ -43,7 +46,8 @@ export default handleActions({
                 isSucc: true,
                 isEnd:isEnd,
                 refreshing:false,
-                datas: datas
+                datas: datas,
+                likeAction:likeAction
             }
         }
 
@@ -57,5 +61,29 @@ export default handleActions({
             }
         }
 
+    },
+    [homeTypes.FETCH_HOME_ADD_IN_SITE_DONE]: {
+        next(state, action) {
+            const {index} = action.payload
+            let datas = JSON.parse(JSON.stringify(state.datas))
+            datas[index]['collect'] = true
+            return {
+                ...state,
+                datas:datas,
+                likeAction:1
+            }
+        }
+    },
+    [homeTypes.FETCH_HOME_CANCEL_IN_ARTICLE_DONE]: {
+        next(state, action) {
+            const {index} = action.payload
+            let datas = JSON.parse(JSON.stringify(state.datas))
+            datas[index]['collect'] = false
+            return {
+                ...state,
+                datas:datas,
+                likeAction:2
+            }
+        }
     }
 }, defaultStatus)
