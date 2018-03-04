@@ -10,9 +10,10 @@ const defaultStatus = {
     registerData:null,
     isLoginSucc: false,
     isRegisterSucc:false,
-    isLogin:false,
+    isLoginLable:false,
     loginComplate:false,
-    registerComplate:false
+    registerComplate:false,
+    isLogin:false
 }
 
 
@@ -23,6 +24,7 @@ export default handleActions({
                 ...state,
                 isLoginSucc: true,
                 loginComplate:true,
+                isLogin:true,
                 loginData: action.payload
             }
         }
@@ -32,6 +34,7 @@ export default handleActions({
             return {
                 ...state,
                 isRegisterSucc: true,
+                isLogin:true,
                 registerComplate:true,
                 registerData: action.payload
             }
@@ -42,6 +45,7 @@ export default handleActions({
             return {
                 ...state,
                 isLoginSucc: false,
+                isLogin:false,
                 loginComplate:true,
                 loginData: action.payload
             }
@@ -52,6 +56,7 @@ export default handleActions({
             return {
                 ...state,
                 isRegisterSucc: false,
+                isLogin:false,
                 registerComplate:true,
                 registerData: action.payload
             }
@@ -62,7 +67,7 @@ export default handleActions({
         next(state, action) {
             return {
                 ...state,
-                isLogin:true,
+                isLoginLable:true,
                 loginComplate:false,
                 loginData:''
             }
@@ -72,9 +77,25 @@ export default handleActions({
         next(state, action) {
             return {
                 ...state,
-                isLogin:false,
+                isLoginLable:false,
                 registerComplate:false,
                 registerData:''
+            }
+        }
+    },
+    [userTypes.FETCH_ISLOGIN_DONE]: {
+        next(state, action) {
+            return {
+                ...state,
+               isLogin:true
+            }
+        }
+    },
+    [userTypes.FETCH_ISLOGIN_ERROE]: {
+        next(state, action) {
+            return {
+                ...state,
+               isLogin:false
             }
         }
     }

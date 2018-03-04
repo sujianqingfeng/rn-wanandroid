@@ -24,6 +24,15 @@ function login(username,password){
     }
 }
 
+function isLogin(){
+
+    return dispatch=>{
+        HttpUtil.get('/lg/collect/list/'+0+'/json')
+        .then(res=>dispatch(createAction(userTypes.FETCH_ISLOGIN_DONE)()))
+        .catch(error=>dispatch(createAction(userTypes.FETCH_ISLOGIN_ERROE)()))
+    }
+}
+
 
 function register(username,password,repassword){
 
@@ -47,5 +56,6 @@ function register(username,password,repassword){
 
 export {
     login,
-    register
+    register,
+    isLogin
 }

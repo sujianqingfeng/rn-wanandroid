@@ -1,4 +1,4 @@
-import * as likeActions from "../actions/likeActions"
+import * as userActions from "../actions/userActions"
 import HeaderBar from './HeaderBar'
 import Homeview from './HomeView'
 import LikeView from './LikeView'
@@ -31,7 +31,7 @@ class HomeScreen extends Component {
     }
 
     componentWillMount(){
-        this.props.getLikeList(0)
+        this.props.getIsLogin()
     }
 
 
@@ -100,11 +100,11 @@ class HomeScreen extends Component {
 }
 
 const mapState = state => ({
-  isLogin: state.like.isSucc,
+  isLogin: state.user.isLogin,
 });
 
 const dispatchAction = dispatch => ({
-  getLikeList: page => dispatch(likeActions.getLikeList(page))
+  getIsLogin: () => dispatch(userActions.isLogin())
 });
 
 export default connect(mapState, dispatchAction)(HomeScreen);

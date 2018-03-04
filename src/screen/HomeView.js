@@ -101,7 +101,7 @@ class HomeView extends Component {
     }
 
     _likeClick= (index,item)=>{
-        console.log(index,item)
+     
         const {isLogin,message,homeAddCollectInSite,homeCancelCollectInArticle} = this.props
         if(!isLogin){
             message('亲，没有登陆')

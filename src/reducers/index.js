@@ -6,20 +6,22 @@ import project from './projectReducer'
 import user from './userReducer'
 import hot from './hotReducer'
 import search from './searchReducer'
-import likeList from './likeListReducer'
+import like from './likeReducer'
 import collect from './collectReducer'
+import articleDetail from './articleDetailReducer'
 
 export default function getRootReducers(navReducer){
 
     return combineReducers({
         search:search,
+        articleDetail:articleDetail,
         collect:collect,
         user:user,
         home:home,
         system:system,
         project:project,
         hot:hot,
-        like:likeList,
+        like:like,
         nav:navReducer
     })
 

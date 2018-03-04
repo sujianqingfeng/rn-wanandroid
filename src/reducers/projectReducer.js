@@ -32,7 +32,8 @@ export default handleActions({
     [projectTypes.FETCH_PEOJECT_ADD_IN_SITE_DONE]: {
         next(state, action) {
             const {index,bool} = action.payload
-            let datas = JSON.parse(JSON.stringify(state.datas))
+            // let datas = JSON.parse(JSON.stringify(state.datas))
+            let datas = [...state.datas]
             datas[index]['collect'] = bool
             return {
                 ...state,

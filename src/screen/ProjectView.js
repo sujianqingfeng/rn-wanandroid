@@ -23,8 +23,6 @@ class ProjectView extends React.Component {
 
     constructor(props) {
         super(props)
-        console.log(8888888888)
-        console.log(this.state)
         this.state = {
             page: 0,
             dataArray: [],

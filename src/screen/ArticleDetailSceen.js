@@ -11,7 +11,7 @@ import Toast, { DURATION } from 'react-native-easy-toast'
 
 
 const windowWidth = Dimensions.get("window").width
-import * as collectActions from '../actions/collectActions'
+import * as articleDetailActions from '../actions/articleDetailActions'
 import HeaderBar from './HeaderBar'
 
 export class ActicleDetailScreen extends React.PureComponent {
@@ -21,21 +21,30 @@ export class ActicleDetailScreen extends React.PureComponent {
 
 
     _like = ()=>{
-        const {isLogin} = this.props.navigation.state.params
-        if(!isLogin){
-            this.refs.toast.show('亲，没有登录', DURATION.LENGTH_SHORT);
-        }else{
+        const {detailCancelCollectInArticle,detailAddCollectInSite,isLogin} = this.props
+        const {id,collect} = this.props.navigation.state.params
 
+        if(!isLogin){
+            this.refs.toast.show('亲，没有登录', DURATION.LENGTH_SHORT)
+            return
+        }
+
+        if(!collect){
+            detailAddCollectInSite(id)
+        }else{
+            detailCancelCollectInArticle(id)
         }
     }
 
     render() {
 
-        const {link,url,title,name} = this.props.navigation.state.params
+        const {link,url,title,name,collect} = this.props.navigation.state.params
+
+        const {isLike} = this.props
         return (
 
             <View style={{flex:1}}>
-                <HeaderBar rightIcon='md-heart-outline'  rightAction={this._like} navigation={this.props.navigation} title={title?title:name} />
+                <HeaderBar rightIcon={(isLike||collect)?'md-heart':'md-heart-outline'}  rightAction={this._like} navigation={this.props.navigation} title={title?title:name} />
                 <WebView
                     automaticallyAdjustContentInsets={false}
                     style={styles.webView}
@@ -68,10 +77,12 @@ const styles = StyleSheet.create({
 
 
 export default connect((state) => ({
-    isAddInSite: state.collect.isAddInSite
+   isLike:state.articleDetail.isLike,
+   isLogin: state.user.isLogin,
   }),
     (dispatch) => ({
-      postAddCollectInSite: (id)=>dispatch(collectActions.postAddCollectInSite(id))
+        detailAddCollectInSite: (id)=>dispatch(articleDetailActions.detailAddCollectInSite(id)),
+        detailCancelCollectInArticle:(id)=>dispatch(articleDetailActions.detailCancelCollectInArticle(id))
     })
   )(ActicleDetailScreen)
 

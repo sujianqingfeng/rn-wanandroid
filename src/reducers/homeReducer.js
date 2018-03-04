@@ -65,7 +65,8 @@ export default handleActions({
     [homeTypes.FETCH_HOME_ADD_IN_SITE_DONE]: {
         next(state, action) {
             const {index} = action.payload
-            let datas = JSON.parse(JSON.stringify(state.datas))
+            // let datas = JSON.parse(JSON.stringify(state.datas))
+            let datas = [...state.datas]
             datas[index]['collect'] = true
             return {
                 ...state,
@@ -77,7 +78,8 @@ export default handleActions({
     [homeTypes.FETCH_HOME_CANCEL_IN_ARTICLE_DONE]: {
         next(state, action) {
             const {index} = action.payload
-            let datas = JSON.parse(JSON.stringify(state.datas))
+            // let datas = JSON.parse(JSON.stringify(state.datas))
+            let datas = [...state.datas]
             datas[index]['collect'] = false
             return {
                 ...state,

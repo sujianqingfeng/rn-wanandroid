@@ -26,7 +26,7 @@ class UserScreen extends React.PureComponent {
 
   componentWillReceiveProps(props) {
    
-    if (props.isLogin) {
+    if (props.isLoginLable) {
 
       if (props.isLoginSucc) {
         this.refs.toast.show('登陆成功', DURATION.LENGTH_SHORT);
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
 
 
 const mapState = (state) => ({
-  isLogin: state.user.isLogin,
+  isLoginLable: state.user.isLoginLable,
   isRegisterSucc: state.user.isRegisterSucc,
   registerData: state.user.registerData,
   isLoginSucc: state.user.isLoginSucc,

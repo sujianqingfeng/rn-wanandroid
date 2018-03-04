@@ -34,21 +34,11 @@ class LikeView extends Component {
 
   componentWillReceiveProps = nextProps => {
 
-    if(!nextProps.isLogin)
-      return
-
-    let array = [];
-
-    if (nextProps.data) {
-      array = this.state.setionOneData.data.concat(nextProps.data.datas);
-      if (this.state.page == 0) {
-        array = nextProps.data.datas;
-      }
-    }
+    
 
     const section = {
       key: "站内收藏",
-      data: array,
+      data: nextProps.datas,
       renderItem: this._renderItemInSite,
     };
 
@@ -64,12 +54,27 @@ class LikeView extends Component {
     </View>
   );
 
+
+  _likeClick= (index,item)=>{
+   
+    const {isLogin,message,likeCancelCollectInMy} = this.props
+    if(!isLogin){
+        message('亲，没有登陆')
+        return 
+    }
+
+    
+    likeCancelCollectInMy(item.id,item.originId,index)
+    
+
+}
+
   _renderItemInSite = ({ item }) => {
     const data = {
       item:item
     }
     return (
-      <ArticleItemView  navigation={this.props.navigation} hide={false} item={data} outline={false}/>
+      <ArticleItemView  navigation={this.props.navigation} hide={false} likeClick={this._likeClick} item={data} outline={false}/>
     )
   }
     
@@ -125,11 +130,12 @@ const styles = StyleSheet.create({
 
 const mapState = state => ({
   isSucc: state.like.isSucc,
-  data: state.like.data
+  datas: state.like.datas
 });
 
 const dispatchAction = dispatch => ({
-  getLikeList: page => dispatch(likeActions.getLikeList(page))
+  getLikeList: page => dispatch(likeActions.getLikeList(page)),
+  likeCancelCollectInMy :(id,originId,index) => dispatch(likeActions.likeCancelCollectInMy(id,originId,index))
 });
 
 export default connect(mapState, dispatchAction)(LikeView);
