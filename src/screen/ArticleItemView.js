@@ -1,15 +1,16 @@
-import * as collectActions from '../actions/collectActions'
-import PropTypes from "prop-types";
-import React from "react";
+import PropTypes from "prop-types"
+import React from "react"
 import {
   Dimensions,
   StyleSheet,
   Text,
   TouchableNativeFeedback,
   View
-} from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
+} from "react-native"
+import Icon from "react-native-vector-icons/Ionicons"
 import { connect } from 'react-redux'
+
+import * as collectActions from '../actions/collectActions'
 
 const windowWidth = Dimensions.get("window").width
 
@@ -19,18 +20,13 @@ class ArticleItemView extends React.PureComponent {
     hide: PropTypes.bool.isRequired,
     navigation: PropTypes.object.isRequired,
     outline:PropTypes.bool,
-    likeClick:PropTypes.func.isRequired,
-    themeColor:PropTypes.string
+    likeClick:PropTypes.func.isRequired
   };
 
 
   static defaultProps = {
     outline:true
   }
-
-
-
-
 
   render() {
     const { hide,outline,likeClick,themeColor} = this.props
@@ -54,7 +50,7 @@ class ArticleItemView extends React.PureComponent {
             </Text>
             <View style={styles.info}>
               <Text style={styles.author}>{item.author}</Text>
-              <Text style={styles.niceDate}>{item.niceDate+themeColor}</Text>
+              <Text style={styles.niceDate}>{item.niceDate}</Text>
             </View>
           </View>
 
@@ -127,4 +123,7 @@ const styles = StyleSheet.create({
 });
 
 
-export default ArticleItemView
+
+export default connect((state) => ({
+  themeColor:state.theme.color
+}))(ArticleItemView) 

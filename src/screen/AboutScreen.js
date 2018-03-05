@@ -1,19 +1,19 @@
 import React from 'react'
 import { View, StyleSheet, Text } from 'react-native'
-
+import { connect } from 'react-redux'
 import ParallaxScroll from '@monterosa/react-native-parallax-scroll';
 
 import HeaderBar from './HeaderBar'
-export default class AboutScreen extends React.Component {
+class AboutScreen extends React.Component {
 
 
 
     render() {
 
-        const { navigation } = this.props
+        const { navigation,backgroundColor } = this.props
 
         return (<ParallaxScroll
-            renderHeader={({ animatedValue }) => <HeaderBar navigation={navigation} title='关于' animatedValue={animatedValue} />}
+            renderHeader={({ animatedValue }) => <HeaderBar backgroundColor={backgroundColor} navigation={navigation} title='关于' animatedValue={animatedValue} />}
             headerHeight={75}
             isHeaderFixed={false}
             parallaxHeight={250}
@@ -42,3 +42,10 @@ const styles = StyleSheet.create({
     }
 
 })
+
+const mapStateToProps = (state) => ({
+    backgroundColor:state.theme.color
+})
+  
+
+export default connect(mapStateToProps)(AboutScreen)

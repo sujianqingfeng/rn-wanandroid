@@ -79,7 +79,7 @@ _keyExtractor = (item, index) => index;
           <HeaderBar backgroundColor={this.props.backgroundColor}  navigation={this.props.navigation} title={this.props.navigation.state.params.k} />
           <FlatList
                     data={this.state.dataArray}
-                    renderItem={(item) => <ArticleItemView  themeColor={this.props.backgroundColor} navigation={this.props.navigation} hide={false} item={item} />}
+                    renderItem={(item) => <ArticleItemView  navigation={this.props.navigation} hide={false} item={item} />}
                 
                     keyExtractor={this._keyExtractor}
                     onEndReachedThreshold={0.1}

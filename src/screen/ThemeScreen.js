@@ -7,21 +7,17 @@ import * as themeActions from '../actions/themeActions'
 import HeaderBar from './HeaderBar'
 import ThemeItemView from './ThemeItemView'
 import * as ColorConst from '../constants/ColorConst'
-
-
-
-
+import RealmUtil from '../utils/RealmUtil'
 
 
 class ThemeScreen extends React.Component {
-
 
 
   constructor(props){
     super(props)
     this.state = {
       chenkIndex:1,
-      colors:ColorConst.getThemeColors()
+      colors:ColorConst.getThemeColors(props.backgroundColor)
     }
   }
 
@@ -34,6 +30,7 @@ class ThemeScreen extends React.Component {
       if(i==index){
         themeColors.push({color:colors[i].color,check:true})
         this.props.changeTheme(colors[i].color)
+        RealmUtil.saveThemeColor(colors[i].color)
       }else{
         themeColors.push({color:colors[i].color,check:false})
       }

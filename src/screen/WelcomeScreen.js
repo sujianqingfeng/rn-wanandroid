@@ -1,16 +1,33 @@
 import React, { Component } from 'react'
 
-import { 
+import {
     Text,
     StyleSheet,
     View,
     Dimensions
- } from 'react-native'
+} from 'react-native'
 
- const windowHeight = Dimensions.get('window').height;
+import { connect } from 'react-redux'
 
-class 　WelcomeScreen extends Component {
 
+import * as themeActions from '../actions/themeActions'
+import RealmUtil from '../utils/RealmUtil'
+
+const windowHeight = Dimensions.get('window').height
+
+class WelcomeScreen extends Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            color: '#E91E63'
+        }
+    }
+    componentWillMount(){
+        const color = RealmUtil.getThemeColor()
+        this.props.changeTheme(color)
+        this.setState({ color })
+    }
 
     componentDidMount() {
         this.timer = setTimeout(() => {
@@ -18,6 +35,7 @@ class 　WelcomeScreen extends Component {
         }, 3000)
 
     }
+   
 
     componentWillUnmount() {
         this.timer && clearTimeout(this.timer)
@@ -25,24 +43,34 @@ class 　WelcomeScreen extends Component {
 
     render() {
         return (
-        <View style={styles.textWarpper}> 
-            <Text style={styles.text}>WAndroid</Text>
-        </View>)
+            <View style={styles.textWarpper}>
+                <Text style={[styles.text, { color: this.state.color }]}>WAndroid</Text>
+            </View>)
     }
 
 
 }
 
 const styles = StyleSheet.create({
-    text:{
-        textAlign:'center',
-        fontSize:50
+    text: {
+        textAlign: 'center',
+        fontSize: 50
     },
-    textWarpper:{
-        height:windowHeight,
-        justifyContent:'center',
-        alignItems:'center'
+    textWarpper: {
+        height: windowHeight,
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 })
 
-export default WelcomeScreen;
+
+const mapStateToProps = (state) =>  ({
+   
+})
+
+const mapDispatchToProps = (dispatch) => ({
+    changeTheme: color => dispatch(themeActions.changeTheme(color))
+})
+
+export default connect(mapStateToProps,mapDispatchToProps)(WelcomeScreen)
+

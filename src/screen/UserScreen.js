@@ -25,31 +25,31 @@ class UserScreen extends React.PureComponent {
 
 
   componentWillReceiveProps(props) {
-   
+
     if (props.isLoginLable) {
 
       if (props.isLoginSucc) {
         this.refs.toast.show('登陆成功', DURATION.LENGTH_SHORT);
         this._goBack()
-      } else if(props.loginComplate) {
+      } else if (props.loginComplate) {
         this.refs.toast.show(props.loginData, DURATION.LENGTH_SHORT);
-       
+
       }
     } else {
 
       if (props.isRegisterSucc) {
         this.refs.toast.show('注册成功', DURATION.LENGTH_SHORT);
-      } else if(props.registerComplate) {
+      } else if (props.registerComplate) {
         this.refs.toast.show(props.registerData, DURATION.LENGTH_SHORT);
       }
     }
   }
 
-  componentWillUnmount(){ 
-    this.setState = (state,callback)=>{
+  componentWillUnmount() {
+    this.setState = (state, callback) => {
       return
     }
-}
+  }
 
 
 
@@ -57,23 +57,22 @@ class UserScreen extends React.PureComponent {
 
 
   render() {
+
+    const { themeColor } = this.props
+
     return (
       <View style={styles.contentWarpper}>
 
         <View style={styles.closeWarpper}>
           <TouchableNativeFeedback
-            background={TouchableNativeFeedback.Ripple(
-              "rgba(52,52,52,0.5)",
-              true
-            )}
-            onPress={this._goBack}
-          >
+            background={TouchableNativeFeedback.Ripple("rgba(52,52,52,0.5)", true)}
+            onPress={this._goBack}>
             <View style={{ height: 40, width: 40, borderRadius: 20 }}>
               <Icon
                 style={{ marginHorizontal: 8 }}
                 name="md-close"
                 size={40}
-                color="#e91e63"
+                color={themeColor}
                 backgroundColor="#00000000"
               />
 
@@ -84,7 +83,7 @@ class UserScreen extends React.PureComponent {
 
         <View style={styles.carouselWarpper}>
           <Carousel
-            activePageIndicatorStyle={{ backgroundColor: "#e91e63" }}
+            activePageIndicatorStyle={{ backgroundColor: themeColor}}
             autoplay={false}
             index={0}
             pageSize={windowWidth * 0.8}
@@ -163,8 +162,9 @@ const mapState = (state) => ({
   registerData: state.user.registerData,
   isLoginSucc: state.user.isLoginSucc,
   loginData: state.user.loginData,
-  loginComplate:state.user.loginComplate,
-  registerComplate:state.user.registerComplate
+  loginComplate: state.user.loginComplate,
+  registerComplate: state.user.registerComplate,
+  themeColor: state.theme.color
 })
 
 const dispatchAction = (dispatch) => ({

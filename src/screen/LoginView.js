@@ -31,6 +31,8 @@ export default class LoginView extends React.PureComponent {
 
 
     render() {
+
+        const {themeColor,login} = this.props 
         return (
             <View style={styles.contentWarpper}>
                
@@ -42,9 +44,9 @@ export default class LoginView extends React.PureComponent {
                         iconColor={'white'}
                         value={this.state.user}
                         onChangeText={(user) => this.setState({ user })}
-                        iconBackgroundColor={'#e91e63'}
-                        selectionColor='#e91e63'
-                        inputStyle={styles.inputStyle}
+                        iconBackgroundColor={themeColor}
+                        selectionColor={themeColor}
+                        inputStyle={[styles.inputStyle,{borderBottomColor:themeColor}]}
                     />
 
                     <Hideo
@@ -54,15 +56,15 @@ export default class LoginView extends React.PureComponent {
                         value={this.state.pwd}
                         secureTextEntry={true}
                         onChangeText={(pwd) => this.setState({ pwd })}
-                        iconBackgroundColor={'#e91e63'}
-                        selectionColor='#e91e63'
-                        inputStyle={styles.inputStyle}
+                        iconBackgroundColor={themeColor}
+                        selectionColor={themeColor}
+                        inputStyle={[styles.inputStyle,{borderBottomColor:themeColor}]}
                     />
                 </View>
 
-                <TouchableNativeFeedback key='login' background={TouchableNativeFeedback.Ripple('rgba(52,52,52,0.5)', true)}  onPress={() =>this.props.login(this.state.user, this.state.pwd)}>
+                <TouchableNativeFeedback key='login' background={TouchableNativeFeedback.Ripple('rgba(52,52,52,0.5)', true)}  onPress={() =>login(this.state.user, this.state.pwd)}>
 
-                    <View style={styles.loginWarpper}>
+                    <View style={[styles.loginWarpper,{backgroundColor:themeColor}]}>
                     <Text style={styles.loginText}>登 录</Text>
                     </View>
                    

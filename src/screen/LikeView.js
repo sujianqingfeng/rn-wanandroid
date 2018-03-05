@@ -71,11 +71,10 @@ class LikeView extends Component {
 
   _renderItemInSite = ({ item }) => {
     const data = {item:item }
-    const {backgroundColor} = this.props
-    
-
+  
+  
     return (
-      <ArticleItemView themeColor={backgroundColor}  navigation={this.props.navigation} hide={false} likeClick={this._likeClick} item={data} outline={false}/>
+      <ArticleItemView  navigation={this.props.navigation} hide={false} likeClick={this._likeClick} item={data} outline={false}/>
     )
   }
     

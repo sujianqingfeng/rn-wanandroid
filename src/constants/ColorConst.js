@@ -15,9 +15,9 @@ let getColors = ()=>([
     "#607D8B"
   ])
 
-let getThemeColors = ()=>{
+let getThemeColors = (color)=>{
     const colors = getColors()
-    return colors.map((item)=>({color:item,check:false}))
+    return colors.map((item)=>({color:item,check:color==item}))
 }
 
 export {getColors,getThemeColors}

@@ -32,23 +32,20 @@ export default class RegisterView extends React.PureComponent {
 
 
     render() {
+
+        const {themeColor,register} = this.props
+
         return (
             <View style={styles.contentWarpper}>
-
-
-
                 <View style={styles.inputWarpper}>
-
                     <Hideo
-
                         iconClass={Icon}
                         iconName={'md-person'}
                         iconColor={'white'}
                         onChangeText={(user) => this.setState({ user })}
-                        iconBackgroundColor={'#e91e63'}
-                        selectionColor='#e91e63'
-
-                        inputStyle={styles.inputStyle}
+                        iconBackgroundColor={themeColor}
+                        selectionColor={themeColor}
+                        inputStyle={[styles.inputStyle,{borderBottomColor:themeColor}]}
                     />
 
                     <Hideo
@@ -57,17 +54,17 @@ export default class RegisterView extends React.PureComponent {
                         iconColor={'white'}
                         secureTextEntry={true}
                         onChangeText={(pwd) => this.setState({ pwd })}
-                        iconBackgroundColor={'#e91e63'}
-                        selectionColor='#e91e63'
-                        inputStyle={styles.inputStyle}
+                        iconBackgroundColor={themeColor}
+                        selectionColor={themeColor}
+                        inputStyle={[styles.inputStyle,{borderBottomColor:themeColor}]}
                     />
 
                 </View>
 
 
-                <TouchableNativeFeedback key='register' background={TouchableNativeFeedback.Ripple('rgba(52,52,52,0.5)', true)} onPress={() => this.props.register(this.state.user, this.state.pwd)}>
+                <TouchableNativeFeedback key='register' background={TouchableNativeFeedback.Ripple('rgba(52,52,52,0.5)', true)} onPress={() => register(this.state.user, this.state.pwd)}>
 
-                    <View  style={styles.loginWarpper}>
+                     <View style={[styles.loginWarpper,{backgroundColor:themeColor}]}>
                    
                     <Text style={styles.loginText}>注 册</Text>
                     </View>
