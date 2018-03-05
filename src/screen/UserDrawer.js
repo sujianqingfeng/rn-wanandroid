@@ -8,21 +8,25 @@ import {
     Image,
     TouchableNativeFeedback
 } from 'react-native'
+import { connect } from 'react-redux'
 import Icon from "react-native-vector-icons/Ionicons"
 const winheight = Dimensions.get('window').height
 
-export default class UserDrawer extends Component {
+class UserDrawer extends Component {
 
 
     render() {
+
+        const {themeColor} =this.props
+
         return (
             <View style={styles.contentWarpper}>
 
-                <View style={styles.header}>
+                <View style={[styles.header,{backgroundColor:themeColor}]}>
                     <Image
                         resizeMode='cover'
                         style={styles.icon}
-                        source={require('./../images/background_draw.jpeg')}
+                        source={require('./../../res/images/background_draw.jpeg')}
                     />
 
                     <Text style={styles.headerText}>素笺淡墨染流年</Text>
@@ -37,7 +41,7 @@ export default class UserDrawer extends Component {
                     <View style={styles.item}>
                         <Icon
                             name='md-person'
-                            size={30} color="#e91e63" />
+                            size={30} color={themeColor} />
 
                         <Text style={styles.itemText}>登陆/注册</Text>
                     </View>
@@ -50,7 +54,7 @@ export default class UserDrawer extends Component {
                     <View style={styles.item}>
                         <Icon
                             name='md-color-palette'
-                            size={30} color="#e91e63" />
+                            size={30} color={themeColor} />
                         <Text style={styles.itemText}>主题</Text>
                     </View>
                 </TouchableNativeFeedback>
@@ -60,7 +64,7 @@ export default class UserDrawer extends Component {
                     <View style={styles.item}>
                         <Icon
                             name='md-pricetag'
-                            size={30} color="#e91e63" />
+                            size={30} color={themeColor} />
 
                         <Text style={styles.itemText}>关于</Text>
                     </View>
@@ -113,3 +117,11 @@ const styles = StyleSheet.create({
 
 
 })
+
+
+
+const mapStateToProps = (state) =>  ({
+    themeColor:state.theme.color
+  })
+  export default connect(mapStateToProps)(UserDrawer)
+  

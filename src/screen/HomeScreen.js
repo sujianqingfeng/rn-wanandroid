@@ -41,32 +41,32 @@ class HomeScreen extends Component {
 
     render() {
 
-        const {navigation,isLogin} = this.props
+        const {navigation,isLogin,backgroundColor} = this.props
         return (
             <View style={{flex: 1,}} >
-                <HeaderBar navigation={navigation} rightIcon='md-search' rightAction={()=>navigation.navigate('search')} title={this.state.title} leftIcon='md-menu' isGoBank={false} screenName='DrawerToggle' />
+                <HeaderBar backgroundColor={backgroundColor} navigation={navigation} rightIcon='md-search' rightAction={()=>navigation.navigate('search')} title={this.state.title} leftIcon='md-menu' isGoBank={false} screenName='DrawerToggle' />
                 <TabNavigator  >
                     <TabNavigator.Item
                         selected={this.state.selectedTab === 'home'}
                         renderIcon={() => <Icon name='md-list' size={25} color='gray' />}
-                        renderSelectedIcon={() => <Icon name='md-list' size={25} color='#e91e63' />}
+                        renderSelectedIcon={() => <Icon name='md-list' size={25} color={backgroundColor} />}
                         onPress={() => this.setState({ selectedTab: 'home',title: '首页'  })}>
-                        <Homeview navigation={navigation} isLogin={isLogin} message={this._message} />
+                        <Homeview  backgroundColor={backgroundColor}  navigation={navigation} isLogin={isLogin} message={this._message} />
                     </TabNavigator.Item>
 
                     <TabNavigator.Item
                         selected={this.state.selectedTab === 'system'}
                         renderIcon={() => <Icon name='md-book' size={25} color='gray' />}
-                        renderSelectedIcon={() => <Icon name='md-book' size={25} color='#e91e63' />}
+                        renderSelectedIcon={() => <Icon name='md-book' size={25} color={backgroundColor} />}
                         onPress={() => this.setState({ selectedTab: 'system',title: '体系' })}>
-                        <SystemView navigation={navigation} />
+                        <SystemView  backgroundColor={backgroundColor}  navigation={navigation} />
                     </TabNavigator.Item>
 
 
                     <TabNavigator.Item
                         selected={this.state.selectedTab === 'project'}
                         renderIcon={() => <Icon name='md-flame' size={25} color='gray' />}
-                        renderSelectedIcon={() => <Icon name='md-flame' size={25} color='#e91e63' />}
+                        renderSelectedIcon={() => <Icon name='md-flame' size={25} color={backgroundColor} />}
                         onPress={() => this.setState({ selectedTab: 'project',title: '项目'  })}>
                         <ProjeceView navigation={navigation} isLogin={isLogin}/>
                     </TabNavigator.Item>
@@ -75,9 +75,9 @@ class HomeScreen extends Component {
                     <TabNavigator.Item
                         selected={this.state.selectedTab === 'like'}
                         renderIcon={() => <Icon name='md-bookmarks' size={25} color='gray' />}
-                        renderSelectedIcon={() => <Icon name='md-bookmarks' size={25} color='#e91e63' />}
+                        renderSelectedIcon={() => <Icon name='md-bookmarks' size={25} color={backgroundColor} />}
                         onPress={() => this.setState({ selectedTab: 'like',title: '收藏' })}>
-                        <LikeView navigation={navigation} isLogin={isLogin} />
+                        <LikeView  backgroundColor={backgroundColor}  navigation={navigation} isLogin={isLogin} />
                     </TabNavigator.Item>
 
                 </TabNavigator>
@@ -101,6 +101,7 @@ class HomeScreen extends Component {
 
 const mapState = state => ({
   isLogin: state.user.isLogin,
+  backgroundColor:state.theme.color
 });
 
 const dispatchAction = dispatch => ({

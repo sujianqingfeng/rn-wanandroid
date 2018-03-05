@@ -6,36 +6,48 @@ import {
 } from 'react-native'
 
 import ScrollableTabView, { ScrollableTabBar, } from 'react-native-scrollable-tab-view'
+import Toast, { DURATION } from 'react-native-easy-toast'
+import { connect } from 'react-redux'
 
 import SystemDItemView from './SystemDItemView'
 import HeaderBar from './HeaderBar'
+import GlobalStyles from '../../res/styles/GlobalStyles'
 
 
 class SystemDetailScreen extends Component {
 
-  static navigationOptions = {
 
-    header: null,
+  _message = (message) => {
+    this.refs.toast.show(message, DURATION.LENGTH_SHORT);
+  }
 
-}
 
 
   render() {
     return (
-      <View style={{flex:1}}>
-        <HeaderBar navigation={this.props.navigation} title={this.props.navigation.state.params.name}/>
+      <View style={{ flex: 1 }}>
+        <HeaderBar  backgroundColor={this.props.themeColor} navigation={this.props.navigation} title={this.props.navigation.state.params.name} />
         <ScrollableTabView
-          tabBarBackgroundColor='#e91e63'
+          tabBarBackgroundColor={this.props.themeColor}
           tabBarUnderlineStyle={{ backgroundColor: 'white' }}
           tabBarActiveTextColor='#fff'
           renderTabBar={() => <ScrollableTabBar />}
           tabBarInactiveTextColor='#fce4ec'>
-          {this.props.navigation.state.params.children.map((item, index) => <SystemDItemView navigation={this.props.navigation}  tabLabel={item.name} key={index} item={item} />)}
+          {this.props.navigation.state.params.children.map((item, index) => <SystemDItemView  message={this._message} navigation={this.props.navigation} tabLabel={item.name} key={index} item={item} />)}
         </ScrollableTabView>
+        <View style={GlobalStyles.toast}>
+          <Toast ref="toast" style={{ backgroundColor: 'rgba(0,0,0,0.7)' }} />
+        </View>
       </View>
 
     )
   }
 }
 
-export default SystemDetailScreen;
+
+const mapStateToProps = (state) =>  ({
+  themeColor:state.theme.color
+})
+export default connect(mapStateToProps)(SystemDetailScreen)
+
+

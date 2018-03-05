@@ -124,7 +124,7 @@ class ProjectView extends React.Component {
                     <View style={styles.bottomWarpper}>
                         <View style={styles.infoWarpper}>
                             <Text>{item.author}</Text>
-                            <Text>{item.niceDate + item.collect}</Text>
+                            <Text>{item.niceDate}</Text>
                         </View>
                         <TouchableNativeFeedback background={TouchableNativeFeedback.Ripple("rgba(52,52,52,0.5)", true)}
                         onPress={()=>this._likeClick(item,index)}>
@@ -133,7 +133,7 @@ class ProjectView extends React.Component {
                                     style={{ marginHorizontal: 8 }}
                                     name={item.collect?'md-heart':'md-heart-outline'}
                                     size={30}
-                                    color='#e91e63'
+                                    color={this.props.backgroundColor}
                                     backgroundColor='#00000000' />
                             </View>
                         </TouchableNativeFeedback>
@@ -209,7 +209,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state,ownProps) => ({
     isSucc: state.project.isSucc,
     datas: state.project.datas,
-    status:state.project.status
+    status:state.project.status,
+    backgroundColor:state.theme.color
 })
 
 const mapDispatchToProps = (dispatch) => ({

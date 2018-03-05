@@ -29,7 +29,8 @@ export default class componentName extends React.PureComponent {
     isGoBank: PropTypes.bool,
     rightAction: PropTypes.func,
     statusStyle: PropTypes.shape(StatusBarShape),
-    navigation: PropTypes.object.isRequired
+    navigation: PropTypes.object.isRequired,
+    backgroundColor:PropTypes.string
   };
 
   static defaultProps = {
@@ -40,11 +41,11 @@ export default class componentName extends React.PureComponent {
       translucent: true
     },
     leftIcon: "md-arrow-back",
-    isGoBank: true
+    isGoBank: true,
+    backgroundColor:'#E91E63'
   };
 
   _leftClick(isGoBank, screenName) {
-    console.log(this.props);
     if (isGoBank) {
       this.props.navigation.goBack();
     } else {
@@ -53,9 +54,9 @@ export default class componentName extends React.PureComponent {
   }
 
   render() {
-    const { rightIcon } = this.props;
+    const { rightIcon ,backgroundColor} = this.props;
     return (
-      <View style={styles.container}>
+      <View style={[styles.container,{  backgroundColor: backgroundColor}]}>
         <View style={styles.statusWapper}>
           <StatusBar {...this.props.statusStyle} />
         </View>
@@ -63,23 +64,9 @@ export default class componentName extends React.PureComponent {
         <View style={styles.headerWarpper}>
           <View style={styles.leftStyle}>
             <TouchableNativeFeedback
-              onPress={() =>
-                this._leftClick(this.props.isGoBank, this.props.screenName)
-              }
-              background={TouchableNativeFeedback.Ripple(
-                "rgba(52,52,52,0.5)",
-                true
-              )}
-            >
-              <View
-                style={{
-                  height: 40,
-                  width: 40,
-                  borderRadius: 20,
-                  alignItems: "center",
-                  justifyContent: "center"
-                }}
-              >
+              onPress={() =>this._leftClick(this.props.isGoBank, this.props.screenName)}
+              background={TouchableNativeFeedback.Ripple("rgba(52,52,52,0.5)",  true )}>
+              <View style={styles.iconWarrrper}>
                 <Icon
                   style={styles.icon}
                   name={this.props.leftIcon}
@@ -104,20 +91,8 @@ export default class componentName extends React.PureComponent {
             {rightIcon ? (
               <TouchableNativeFeedback
                 onPress={this.props.rightAction}
-                background={TouchableNativeFeedback.Ripple(
-                  "rgba(52,52,52,0.5)",
-                  true
-                )}
-              >
-                <View
-                  style={{
-                    height: 40,
-                    width: 40,
-                    borderRadius: 20,
-                    alignItems: "center",
-                    justifyContent: "center"
-                  }}
-                >
+                background={TouchableNativeFeedback.Ripple("rgba(52,52,52,0.5)",true)} >
+                <View style={styles.iconWarrrper}>
                   <Icon
                     style={styles.icon}
                     name={this.props.rightIcon}
@@ -138,8 +113,6 @@ export default class componentName extends React.PureComponent {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#e91e63",
-
     height:
       (Platform.os === "ios" ? NAVBAR_HEIGHT_IOS : NAVBAR_HEIGHT_AMDROID) +
       StatusBar.currentHeight
@@ -171,5 +144,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "white",
     margin: 16
+  },
+  iconWarrrper:{
+    height: 40,
+    width: 40,
+    borderRadius: 20,
+    alignItems: "center",
+    justifyContent: "center"
   }
 });

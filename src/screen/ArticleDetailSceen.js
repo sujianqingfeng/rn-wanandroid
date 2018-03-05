@@ -40,11 +40,11 @@ export class ActicleDetailScreen extends React.PureComponent {
 
         const {link,url,title,name,collect} = this.props.navigation.state.params
 
-        const {isLike} = this.props
+        const {isLike,backgroundColor} = this.props
         return (
 
             <View style={{flex:1}}>
-                <HeaderBar rightIcon={(isLike||collect)?'md-heart':'md-heart-outline'}  rightAction={this._like} navigation={this.props.navigation} title={title?title:name} />
+                <HeaderBar rightIcon={(isLike||collect)?'md-heart':'md-heart-outline'}  backgroundColor={backgroundColor} rightAction={this._like} navigation={this.props.navigation} title={title?title:name} />
                 <WebView
                     automaticallyAdjustContentInsets={false}
                     style={styles.webView}
@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
 export default connect((state) => ({
    isLike:state.articleDetail.isLike,
    isLogin: state.user.isLogin,
+   backgroundColor:state.theme.color
   }),
     (dispatch) => ({
         detailAddCollectInSite: (id)=>dispatch(articleDetailActions.detailAddCollectInSite(id)),

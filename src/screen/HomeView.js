@@ -46,12 +46,12 @@ class HomeView extends Component {
 
     _headView = () => {
         
-        const {banners} = this.props
+        const {banners,themeColor} = this.props
 
         return (
             <View style={{ margin: 8, borderRadius: 5, }}>
                 <Carousel
-                    activePageIndicatorStyle={{ backgroundColor: '#e91e63' }}
+                    activePageIndicatorStyle={{ backgroundColor: themeColor}}
                     pageIndicatorStyle={{ backgroundColor: 'white' }}
                     autoplay
                     autoplayTimeout={5000}
@@ -97,6 +97,7 @@ class HomeView extends Component {
 
     // 下拉刷新
     _renderRefresh = () => {
+        this.setState({page: 0})
         this.props.getHomeList(0)
     }
 
@@ -120,13 +121,14 @@ class HomeView extends Component {
 
     render() {
         const { dataArray } = this.state
-        const { navigation, message, isLogin, datas ,refreshing} = this.props
+        const { navigation, message, isLogin, datas ,refreshing,themeColor} = this.props
 
         return (
             <View>
+                <Text>{themeColor}</Text>
                 <FlatList
                     data={datas}
-                    renderItem={(item, index) => <ArticleItemView  likeClick={this._likeClick} isLogin={isLogin}  navigation={navigation} hide={false} item={item} />}
+                    renderItem={(item, index) => <ArticleItemView themeColor={this.props.themeColor}  likeClick={this._likeClick} isLogin={isLogin}  navigation={navigation} hide={false} item={item} />}
                     ListHeaderComponent={this._headView}
                     keyExtractor={(item, index) => index}
                     onEndReachedThreshold={0.1}
@@ -206,7 +208,8 @@ export default connect((state) => ({
     banners: state.home.banners,
     isEnd:state.home.isEnd,
     refreshing:state.home.refreshing,
-    likeAction:state.home.likeAction
+    likeAction:state.home.likeAction,
+    themeColor:state.theme.color
 }),
     (dispatch) => ({
         getHomeList: (num) => dispatch(homeActions.getHome(num)),

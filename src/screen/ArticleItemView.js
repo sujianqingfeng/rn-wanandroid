@@ -19,7 +19,8 @@ class ArticleItemView extends React.PureComponent {
     hide: PropTypes.bool.isRequired,
     navigation: PropTypes.object.isRequired,
     outline:PropTypes.bool,
-    likeClick:PropTypes.func.isRequired
+    likeClick:PropTypes.func.isRequired,
+    themeColor:PropTypes.string
   };
 
 
@@ -32,7 +33,7 @@ class ArticleItemView extends React.PureComponent {
 
 
   render() {
-    const { hide,outline,likeClick} = this.props
+    const { hide,outline,likeClick,themeColor} = this.props
     const { item,index } = this.props.item
  
     return (
@@ -42,7 +43,7 @@ class ArticleItemView extends React.PureComponent {
           {hide ? (
             <View />
           ) : (
-            <View style={[styles.chapterWarpper]}>
+            <View style={[styles.chapterWarpper,{backgroundColor:themeColor}]}>
               <Text style={styles.chapterText}>{item.chapterName?item.chapterName:'其他'}</Text>
             </View>
           )}
@@ -53,7 +54,7 @@ class ArticleItemView extends React.PureComponent {
             </Text>
             <View style={styles.info}>
               <Text style={styles.author}>{item.author}</Text>
-              <Text style={styles.niceDate}>{item.niceDate}</Text>
+              <Text style={styles.niceDate}>{item.niceDate+themeColor}</Text>
             </View>
           </View>
 
@@ -63,7 +64,7 @@ class ArticleItemView extends React.PureComponent {
             <View style={{ height: 30, width: 30, borderRadius: 15,marginRight:8,justifyContent:'center',alignItems:'center' }}>
               <Icon
                 name={(item.collect||!outline)?'md-heart':'md-heart-outline'}
-                size={30} color="#e91e63"/>
+                size={30} color={themeColor}/>
             </View>
           </TouchableNativeFeedback>
         </View>
@@ -85,7 +86,6 @@ const styles = StyleSheet.create({
     height: 70,
     justifyContent: "center",
     width: 15,
-    backgroundColor: "#e91e63",
     borderBottomLeftRadius: 5,
     borderTopLeftRadius: 5
   },
@@ -127,14 +127,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default connect((state) => ({
-  isAddInSite: state.collect.isAddInSite,
-  isCancelInA:state.collect.isCancelInA,
-  isCancelInM:state.collect.isCancelInM
-}),
-  (dispatch) => ({
-    postAddCollectInSite: (id)=>dispatch(collectActions.postAddCollectInSite(id)),
-    postCancelCollectInArticle:(id)=>dispatch(collectActions.postCancelCollectInArticle(id)),
-    postCancelCollectInMy:(id)=>dispatch(collectActions.postCancelCollectInMy(id))
-  })
-)(ArticleItemView)
+export default ArticleItemView

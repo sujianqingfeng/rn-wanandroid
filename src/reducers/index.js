@@ -9,11 +9,14 @@ import search from './searchReducer'
 import like from './likeReducer'
 import collect from './collectReducer'
 import articleDetail from './articleDetailReducer'
+import theme from './themeReducer'
+
 
 export default function getRootReducers(navReducer){
 
     return combineReducers({
         search:search,
+        theme:theme,
         articleDetail:articleDetail,
         collect:collect,
         user:user,

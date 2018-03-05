@@ -76,10 +76,10 @@ _keyExtractor = (item, index) => index;
   render() {
     return (
       <View>
-          <HeaderBar  navigation={this.props.navigation} title={this.props.navigation.state.params.k} />
+          <HeaderBar backgroundColor={this.props.backgroundColor}  navigation={this.props.navigation} title={this.props.navigation.state.params.k} />
           <FlatList
                     data={this.state.dataArray}
-                    renderItem={(item) => <ArticleItemView  navigation={this.props.navigation} hide={false} item={item} />}
+                    renderItem={(item) => <ArticleItemView  themeColor={this.props.backgroundColor} navigation={this.props.navigation} hide={false} item={item} />}
                 
                     keyExtractor={this._keyExtractor}
                     onEndReachedThreshold={0.1}
@@ -94,7 +94,8 @@ _keyExtractor = (item, index) => index;
 
 const mapStateToProps = (state) => ({
   isSucc:state.search.isSucc,
-  data:state.search.data
+  data:state.search.data,
+  backgroundColor:state.theme.color
 })
 
 const mapDispatchToProps = dispatch=>( {

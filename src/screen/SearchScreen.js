@@ -70,14 +70,12 @@ class SearchScreen extends Component {
   }
 
   render() {
+
+    
+
     return (
       <View style={{ flex: 1 }}>
-        <HeaderBar
-          rightIcon="md-search"
-          rightAction={this._rightAction}
-          titleView={this._renderTitleView}
-          navigation={this.props.navigation}
-        />
+        <HeaderBar rightIcon="md-search" backgroundColor={this.props.backgroundColor} rightAction={this._rightAction} titleView={this._renderTitleView} navigation={this.props.navigation}/>
 
         <View style={styles.hotCard}>
           <Text style={{fontSize: 20,}}>大家都在搜索</Text>
@@ -130,7 +128,8 @@ const styles = StyleSheet.create({
 const mapState = state => ({
   isSucc: state.hot.isSucc,
   data: state.hot.data,
-  friend:state.hot.friendArray
+  friend:state.hot.friendArray,
+  backgroundColor:state.theme.color
 });
 
 const dispatchAction = dispatch => ({

@@ -23,8 +23,6 @@ export class SystemDItemView extends Component {
     this.state = {
       page: 0,
       cid: props.item.id,
-      dataArray: [],
-      refreshing: false,
     }
   }
 
@@ -34,59 +32,68 @@ export class SystemDItemView extends Component {
   }
 
 
-  componentWillReceiveProps(props) {
-    let array = []
-
-    if (props.data) {
-      array = this.state.dataArray.concat(props.data.datas)
-
-      if (this.page == 0) {
-        array = props.data.datas
-      }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.likeAction == 1) {
+      nextProps.message('添加收藏')
+    } else if (nextProps.likeAction == 2) {
+      nextProps.message('取消收藏')
     }
-
-    this.setState({
-      dataArray: array
-    })
   }
 
 
   _onEndReached = () => {
-    let data = this.props.data
-    let page = this.state.page
 
-    if (data && page < data.pageCount) {
+
+
+    let {page,cid} = this.state
+    const {datas} = this.props
+
+    if (!datas[cid].isEnd) {
       page++
-      this.setState({
-        page: page
-      }
-      )
-      this.props.getSystemDetailList(page, this.state.cid)
+      this.setState({ page: page })
+      this.props.getSystemDetailList(page, cid)
     }
   }
 
   _renderRefresh = () => {
-    this.setState({
-      refreshing: true,
-      page: 0,
-      dataArray: []
-    })
+    this.setState({ page: 0 })
     this.props.getSystemDetailList(0, this.state.cid)
   }
 
 
-  _keyExtractor = (item, index) => index
+  _likeClick = (index, item) => {
+
+    const { isLogin, message, systemAddCollectInSite, systemCancelCollectInArticle } = this.props
+    let {cid} = this.state
+    if (!isLogin) {
+      message('亲，没有登陆')
+      return
+    }
+
+    if (item.collect) {
+      systemCancelCollectInArticle(item.id, index,cid)
+    } else {
+      systemAddCollectInSite(item.id, index,cid)
+    }
+
+  }
 
 
   render() {
+
+    const {datas ,themeColor}  = this.props
+    const {cid}  = this.state
+    const data = datas[cid]?datas[cid].datas:[]
+   
     return (
+   
       <FlatList
-        data={this.state.dataArray}
-        renderItem={(item) => <ArticleItemView navigation={this.props.navigation}  hide={true} item={item} />}
-        keyExtractor={this._keyExtractor}
+        data={data}
+        renderItem={(item) => <ArticleItemView themeColor={themeColor} likeClick={this._likeClick} navigation={this.props.navigation} hide={true} item={item} />}
+        keyExtractor={(item, index) => index}
         onEndReachedThreshold={0.1}
         onEndReached={this._onEndReached}
-        refreshing={this.state.refreshing}
+        refreshing={this.props.refreshing}
         onRefresh={this._renderRefresh}
       />
     )
@@ -150,15 +157,21 @@ const styles = StyleSheet.create({
 })
 
 
-const mapState = (state) => ({
-  isSucc: state.system.isSucc,
-  data: state.system.detail
+const mapStateToProps = (state) =>  ({
+  datas: state.system.details,
+  isLogin: state.user.isLogin,
+  isEnd: state.system.isEnd,
+  refreshing: state.system.detailRefreshing,
+  likeAction: state.system.likeAction,
+  themeColor:state.theme.color
 })
 
-const dispatchAction = (dispatch) => ({
-  getSystemDetailList: (page, id) => dispatch(systemActions.getSystemDetailList(page, id))
+const mapDispatchToProps = (dispatch) => ({
+  getSystemDetailList: (page, id) => dispatch(systemActions.getSystemDetailList(page, id)),
+  systemAddCollectInSite: (id, index,cid) => dispatch(systemActions.systemAddCollectInSite(id, index,cid)),
+  systemCancelCollectInArticle: (id, index,cid) => dispatch(systemActions.systemCancelCollectInArticle(id, index,cid))
 })
 
 
-export default connect(mapState, dispatchAction)(SystemDItemView)
+export default connect(mapStateToProps, mapDispatchToProps)(SystemDItemView)
 
