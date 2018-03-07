@@ -68,7 +68,7 @@ class HomeScreen extends Component {
                         renderIcon={() => <Icon name='md-flame' size={25} color='gray' />}
                         renderSelectedIcon={() => <Icon name='md-flame' size={25} color={backgroundColor} />}
                         onPress={() => this.setState({ selectedTab: 'project',title: '项目'  })}>
-                        <ProjeceView navigation={navigation} isLogin={isLogin}/>
+                        <ProjeceView message={this._message} navigation={navigation} isLogin={isLogin}/>
                     </TabNavigator.Item>
 
 

@@ -49,8 +49,8 @@ class LikeView extends Component {
   };
 
   _renderSectionHeader = ({ section }) => (
-    <View style={{ flex: 1, height: 25 }}>
-      <Text style={{marginLeft:8,justifyContent:'center'}}>{section.key}</Text>
+    <View style={{ flex: 1 }}>
+      <Text style={{marginLeft:8, marginTop:8,marginBottom:4,justifyContent:'center',alignItems:"center"}}>{section.key}</Text>
     </View>
   );
 
@@ -63,15 +63,11 @@ class LikeView extends Component {
         return 
     }
 
-    
     likeCancelCollectInMy(item.id,item.originId,index)
-    
-
 }
 
   _renderItemInSite = ({ item }) => {
     const data = {item:item }
-  
   
     return (
       <ArticleItemView  navigation={this.props.navigation} hide={false} likeClick={this._likeClick} item={data} outline={false}/>
@@ -87,8 +83,8 @@ class LikeView extends Component {
 
     const content = isLogin ? (<SectionList
     keyExtractor={(item, index) => index}
-     renderSectionHeader={this._renderSectionHeader}
-     showsVerticalScrollIndicator={false}
+    renderSectionHeader={this._renderSectionHeader}
+    showsVerticalScrollIndicator={false}
     sections={sections}/>):<Text style={styles.hintText}>亲，没有登录</Text>
 
     return (

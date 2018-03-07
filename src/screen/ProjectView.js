@@ -5,17 +5,9 @@ import {
     Text,
     View,
     FlatList,
-    Dimensions,
-    Image,
-    TouchableNativeFeedback
 } from 'react-native'
 
-
-import Icon from 'react-native-vector-icons/Ionicons'
-
-const WidthWidth = Dimensions.get('window').width;
-
-
+import ProjectItemView from './ProjectItemView'
 import * as projectActions from '../actions/projectActions'
 
 
@@ -24,10 +16,7 @@ class ProjectView extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            page: 0,
-            dataArray: [],
-            refreshing: false,
-            clickIndex:0
+            page: 0
         }
     }
 
@@ -36,62 +25,40 @@ class ProjectView extends React.Component {
     }
 
 
-    componentWillReceiveProps(props) {
-      
-        let array = []
-
-        this.setState({
-           
-            refreshing: false,
-        })
+    componentWillUpdate(){
+        this.props.changeLikeAction()
     }
 
 
-    changeIcon = (index,bool)=>{
-        let dataArray = this.state.dataArray
-        dataArray[index]['collect']= bool
-
-        console.log(dataArray)
-        this.setState({dataArray:dataArray})
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.likeAction == 1) {
+            nextProps.message('添加收藏')
+        } else if (nextProps.likeAction == 2) {
+            nextProps.message('取消收藏')
+        }
     }
-
-
-
 
     _onEndReached = () => {
-        let data = this.props.data
         let page = this.state.page
-
-        if (data && page < data.pageCount) {
+        if (!this.props.isEnd) {
             page++
-            this.setState({
-                page: page
-            }
-            )
+            this.setState({page: page})
             this.props.getProjectList(page)
         }
     }
 
     // 下拉刷新
     _renderRefresh = () => {
-        this.setState({
-            refreshing: true,
-            page: 0,
-            dataArray: []
-        })
+        this.setState({page: 0})
         this.props.getProjectList(0)
     };
 
 
-    _goToDetail = (item)=>{
-        const {navigation,isLogin} = this.props
-        const params = {...item,isLogin:isLogin}
-        navigation.navigate("article_detail", params)
-    }
+  
 
     _likeClick = (item,index)=>{
 
-        const {isLogin,message} = this.props
+        const {isLogin,message,projectAddCollectInSite,projectCancelCollectInArticle} = this.props
 
         if(!isLogin){
             message('请，没有登录')
@@ -99,63 +66,28 @@ class ProjectView extends React.Component {
         }
 
         if(item.collect){
-
+            projectCancelCollectInArticle(item.id,index)
         }else{
-            this.props.projectAddCollectInSite(item.id,index,true)
+            projectAddCollectInSite(item.id,index,true)
         }
     }
 
 
-    _renderItem = ({ item,index }) => (
-        <TouchableNativeFeedback onPress={()=>this._goToDetail(item)}>
-            <View style={styles.itemWarpper}>
-                <View>
-                    <Image style={{ width: 100, height: 180 }} source={{ uri: item.envelopePic }} />
-                </View>
-
-                <View style={styles.itemContentWarpper}>
-
-                    <View style={styles.titleWarpper}>
-                        <Text style={styles.title} numberOfLines={1} ellipsizeMode='tail'>{item.title}</Text>
-                        <Text style={styles.desc} numberOfLines={5} ellipsizeMode='tail' >{item.desc}</Text>
-                    </View>
-
-
-                    <View style={styles.bottomWarpper}>
-                        <View style={styles.infoWarpper}>
-                            <Text>{item.author}</Text>
-                            <Text>{item.niceDate}</Text>
-                        </View>
-                        <TouchableNativeFeedback background={TouchableNativeFeedback.Ripple("rgba(52,52,52,0.5)", true)}
-                        onPress={()=>this._likeClick(item,index)}>
-                            <View style={styles.likeWarpper}>
-                                <Icon
-                                    style={{ marginHorizontal: 8 }}
-                                    name={item.collect?'md-heart':'md-heart-outline'}
-                                    size={30}
-                                    color={this.props.backgroundColor}
-                                    backgroundColor='#00000000' />
-                            </View>
-                        </TouchableNativeFeedback>
-                    </View>
-                </View>
-
-            </View>
-        </TouchableNativeFeedback>
-    )
-
   
  
     render() {
+
+        const {datas,refreshing,backgroundColor,navigation,isLogin}= this.props
+
         return (
             <View style={styles.textWarpper}>
                 <FlatList
-                    data={this.props.datas}
-                    renderItem={this._renderItem}
+                    data={datas}
+                    renderItem={(item,index)=><ProjectItemView item={item}  isLogin={isLogin} navigation={navigation} likeClick={this._likeClick} />}
                     keyExtractor={ (item, index) => index}
                     onEndReachedThreshold={0.1}
                     onEndReached={this._onEndReached}
-                    refreshing={this.state.refreshing}
+                    refreshing={refreshing}
                     onRefresh={this._renderRefresh}
                 />
             </View>
@@ -169,39 +101,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    itemWarpper: {
-        flexDirection: 'row',
-        height: 180,
-        width: WidthWidth - 16,
-        backgroundColor: 'white',
-        borderRadius: 5,
-        margin: 8,
-    },
-    itemContentWarpper: {
-        marginHorizontal: 16,
-        marginVertical: 8,
-        width: WidthWidth - 148,
-    },
-    titleWarpper: {
-        flex: 1,
-    },
-    title: {
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-    desc: {
-    },
-    bottomWarpper: {
-        flexDirection: 'row',
-        marginVertical: 8,
-    },
-    infoWarpper: {
-        flex: 1,
-        alignSelf: 'flex-start'
-    },
-    likeWarpper: {
-        alignSelf: 'flex-end',
-    }
+   
 })
 
 
@@ -209,14 +109,17 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state,ownProps) => ({
     isSucc: state.project.isSucc,
     datas: state.project.datas,
-    status:state.project.status,
-    backgroundColor:state.theme.color
+    backgroundColor:state.theme.color,
+    isEnd:state.project.isEnd,
+    likeAction:state.project.likeAction,
+    refreshing:state.project.refreshing
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    projectAddCollectInSite: (id,index,bool)=>dispatch(projectActions.postAddCollectInSite(id,index,bool)),
+    projectAddCollectInSite: (id,index,bool)=>dispatch(projectActions.projectAddCollectInSite(id,index,bool)),
+    projectCancelCollectInArticle :(id,index) =>dispatch(projectActions.projectCancelCollectInArticle(id,index)),
     getProjectList: (page) => dispatch(projectActions.getProjectList(page)),
-    changeIcon : (index,bool)=>dispatch(projectActions.changeIcon(index,bool))
+    changeLikeAction:() =>dispatch(projectActions.changeLikeAction())
 })
 
 

@@ -44,13 +44,9 @@ class HomeView extends React.Component {
 
     _onEndReached = () => {
         let page = this.state.page
-
         if (!this.props.isEnd) {
             page++
-            this.setState({
-                page: page
-            }
-            )
+            this.setState({page: page})
             this.props.getHomeList(page)
         }
     }
