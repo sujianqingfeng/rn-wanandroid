@@ -54,8 +54,20 @@ function register(username,password,repassword){
 }
 
 
+const changeLoginState = (bool)=>{
+    return dispatch =>{
+        if (bool){
+            dispatch(createAction(userTypes.FETCH_ISLOGIN_DONE)())
+        }else{
+            dispatch(createAction(userTypes.FETCH_ISLOGIN_ERROE)())
+        }
+    }
+}
+
+
 export {
     login,
     register,
-    isLogin
+    isLogin,
+    changeLoginState
 }

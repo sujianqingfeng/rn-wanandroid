@@ -6,28 +6,60 @@ import {
     Text,
     View,
     Image,
-    TouchableNativeFeedback
+    TouchableNativeFeedback,
+    Alert
 } from 'react-native'
 import { connect } from 'react-redux'
 import Icon from "react-native-vector-icons/Ionicons"
+
+import RealmUtil from '../utils/RealmUtil'
+import * as userActions from '../actions/userActions'
 const winheight = Dimensions.get('window').height
 
 class UserDrawer extends Component {
 
 
+
+    _iconClick = () => {
+        const {isLogin,navigation,changeLoginState} = this.props
+        if(isLogin){
+            Alert.alert(
+                '提示',
+                '你确定要注销账号么？',
+                [
+                   
+                    { text: '取消', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+                    { text: '确定', onPress: () => {RealmUtil.saveCookie('');changeLoginState} },
+                ],
+                { cancelable: true }
+            )
+        }else{
+            navigation.navigate('login')
+        }
+
+       
+    }
+
+
     render() {
 
-        const {themeColor} =this.props
+        const { themeColor } = this.props
 
         return (
             <View style={styles.contentWarpper}>
 
-                <View style={[styles.header,{backgroundColor:themeColor}]}>
-                    <Image
+                <View style={[styles.header, { backgroundColor: themeColor }]}>
+                <TouchableNativeFeedback
+                    onPress={this._iconClick}>
+
+                   <Image
+                       
                         resizeMode='cover'
                         style={styles.icon}
                         source={require('./../../res/images/background_draw.jpeg')}
                     />
+                </TouchableNativeFeedback>
+                    
 
                     <Text style={styles.headerText}>素笺淡墨染流年</Text>
 
@@ -85,32 +117,32 @@ const styles = StyleSheet.create({
     },
     header: {
         height: winheight * 0.3,
-        backgroundColor:"#e91e63",
+        backgroundColor: "#e91e63",
         justifyContent: 'center',
-        alignItems:'center'
+        alignItems: 'center'
     },
-    icon:{
-        height:100,
-        width:100,
+    icon: {
+        height: 100,
+        width: 100,
         borderRadius: 50,
         borderWidth: 2,
         borderColor: 'white',
     },
-    headerText:{
-        color:'white',
+    headerText: {
+        color: 'white',
         marginTop: 4,
-        fontSize:20
+        fontSize: 20
     },
     item: {
         flexDirection: 'row',
         padding: 12,
         marginVertical: 1,
-        height:50,
+        height: 50,
         alignItems: 'center',
-        backgroundColor:'white',
-        width:260
+        backgroundColor: 'white',
+        width: 260
     },
-    itemText:{
+    itemText: {
         fontSize: 15,
         marginLeft: 16,
     }
@@ -120,8 +152,18 @@ const styles = StyleSheet.create({
 
 
 
-const mapStateToProps = (state) =>  ({
-    themeColor:state.theme.color
-  })
-  export default connect(mapStateToProps)(UserDrawer)
-  
+
+
+const mapStateToProps = (state) => ({
+    themeColor: state.theme.color,
+    isLogin:state.user.isLogin
+})
+
+
+
+
+const mapDispatchToProps = (dispatch) => ({
+    changeLoginState:(bool) =>dispatch(userActions.changeLoginState(bool))
+})
+
+export default connect(mapStateToProps,mapDispatchToProps)(UserDrawer)

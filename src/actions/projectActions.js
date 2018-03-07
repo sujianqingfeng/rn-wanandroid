@@ -34,13 +34,6 @@ function projectCancelCollectInArticle(id,index) {
 const changeLikeAction = () => (dispatch =>dispatch(createAction(projectTypes.CHANGE_LIKE_ACTION)()))
 
 
-// const changeLikeAction = () => {return dispatch =>dispatch(createAction(projectTypes.CHANGE_LIKE_ACTION)())}
-
-// function changeLikeAction(){
-//     return dispatch =>{
-//         dispatch(createAction(projectTypes.CHANGE_LIKE_ACTION)())
-//     }
-// }
 
 export{
     getProjectList,
