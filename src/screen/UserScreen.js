@@ -39,6 +39,7 @@ class UserScreen extends React.PureComponent {
 
       if (props.isRegisterSucc) {
         this.refs.toast.show('注册成功', DURATION.LENGTH_SHORT);
+        this._goBack()
       } else if (props.registerComplate) {
         this.refs.toast.show(props.registerData, DURATION.LENGTH_SHORT);
       }
@@ -46,14 +47,12 @@ class UserScreen extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    this.setState = (state, callback) => {
-      return
-    }
+    this.timer&&clearTimeout(this.timer)
   }
 
-
-
-  _goBack = () => this.props.navigation.goBack()
+  _goBack = () =>{
+    this.timer = setTimeout(()=>this.props.navigation.goBack(),1000)
+  } 
 
 
   render() {
