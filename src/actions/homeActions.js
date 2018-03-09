@@ -33,19 +33,20 @@ function homeAddCollectInSite(id,index) {
   }
 
 
-  function homeCancelCollectInArticle(id,index) {
+function homeCancelCollectInArticle(id,index) {
     return dispatch => {
       HttpUtil.post("/lg/uncollect_originId/" + id + "/json")
       .then(res =>dispatch(createAction(homeTypes.FETCH_HOME_CANCEL_IN_ARTICLE_DONE)({index:index})));
-    };
-  }
+    }
+}
   
 
-
+const changeLikeAction = ()=>dispatch=>dispatch(createAction(homeTypes.CHANGE_HOME_LIKE_ACTION)())
 
 export {
     getHome,
     getHomeBanner,
     homeAddCollectInSite,
-    homeCancelCollectInArticle
+    homeCancelCollectInArticle,
+    changeLikeAction
 }

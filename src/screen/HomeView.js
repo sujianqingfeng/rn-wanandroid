@@ -21,9 +21,7 @@ class HomeView extends React.Component {
 
     constructor(props) {
         super(props)
-        this.state = {
-            page: 0
-        }
+        this.state = {page: 0}
     }
 
     componentWillMount() {
@@ -41,6 +39,8 @@ class HomeView extends React.Component {
         }
     }
 
+    componentWillUpdate =()=>this.props.changeLikeAction()
+    
 
     _onEndReached = () => {
         let page = this.state.page
@@ -90,8 +90,6 @@ class HomeView extends React.Component {
 }
 
 
-
-
 const styles = StyleSheet.create({
 
     itemView: {
@@ -131,18 +129,20 @@ const styles = StyleSheet.create({
 })
 
 
-export default connect((state) => ({
-    isSucc: state.home.isSucc,
-    datas: state.home.datas,
-    banners: state.home.banners,
-    isEnd: state.home.isEnd,
-    refreshing: state.home.refreshing,
-    likeAction: state.home.likeAction
+export default connect(
+    (state) => ({
+        isSucc: state.home.isSucc,
+        datas: state.home.datas,
+        banners: state.home.banners,
+        isEnd: state.home.isEnd,
+        refreshing: state.home.refreshing,
+        likeAction: state.home.likeAction
 }),
     (dispatch) => ({
         getHomeList: (num) => dispatch(homeActions.getHome(num)),
         getBanner: () => dispatch(homeActions.getHomeBanner()),
         homeAddCollectInSite: (id, index) => dispatch(homeActions.homeAddCollectInSite(id, index)),
-        homeCancelCollectInArticle: (id, index) => dispatch(homeActions.homeCancelCollectInArticle(id, index))
+        homeCancelCollectInArticle: (id, index) => dispatch(homeActions.homeCancelCollectInArticle(id, index)),
+        changeLikeAction :()=>dispatch(homeActions.changeLikeAction())
     })
 )(HomeView)

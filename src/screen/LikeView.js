@@ -28,12 +28,19 @@ class LikeView extends Component {
   }
 
   componentWillMount() {
-    this.props.getLikeList(this.state.page);
-
+    const {getLikeList,isLogin} = this.props
+    if(isLogin){
+      const {page}= this.state
+      getLikeList(page)
+    }
   }
 
   componentWillReceiveProps = nextProps => {
 
+    if(nextProps.isLogin&&!nextProps.isSucc){
+      this.setState({page:0})
+      nextProps.getLikeList(0)
+    }
     
 
     const section = {
@@ -50,7 +57,7 @@ class LikeView extends Component {
 
   _renderSectionHeader = ({ section }) => (
     <View style={{ flex: 1 }}>
-      <Text style={{marginLeft:8, marginTop:8,marginBottom:4,justifyContent:'center',alignItems:"center"}}>{section.key}</Text>
+      <Text style={styles.headerText}>{section.key}</Text>
     </View>
   );
 
@@ -121,6 +128,13 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     alignItems: 'center',
     alignSelf: 'center',
+  },
+  headerText:{
+    marginLeft:8,
+    marginTop:8,
+    marginBottom:4,
+    justifyContent:'center',
+    alignItems:"center"
   }
 });
 

@@ -87,5 +87,14 @@ export default handleActions({
                 likeAction:2
             }
         }
-    }
+    },
+    [homeTypes.CHANGE_HOME_LIKE_ACTION]: {
+        next(state, action) {
+            return {
+                ...state,
+                likeAction:0
+            }
+        }
+
+    },
 }, defaultStatus)

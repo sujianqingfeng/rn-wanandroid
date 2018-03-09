@@ -15,21 +15,13 @@ class ProjectView extends React.Component {
 
     constructor(props) {
         super(props)
-        this.state = {
-            page: 0
-        }
+        this.state = {page: 0}
     }
 
-    componentWillMount() {
-        this.props.getProjectList(this.state.page)
-    }
-
-
-    componentWillUpdate(){
-        this.props.changeLikeAction()
-    }
-
-
+    componentWillMount=()=>this.props.getProjectList(this.state.page)
+    
+    componentWillUpdate =()=>this.props.changeLikeAction()
+    
     componentWillReceiveProps(nextProps) {
         if (nextProps.likeAction == 1) {
             nextProps.message('添加收藏')
@@ -74,7 +66,6 @@ class ProjectView extends React.Component {
 
 
   
- 
     render() {
 
         const {datas,refreshing,backgroundColor,navigation,isLogin}= this.props
