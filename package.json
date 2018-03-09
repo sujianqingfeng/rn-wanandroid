@@ -7,13 +7,13 @@
 		"test": "jest"
 	},
 	"dependencies": {
-		"@monterosa/react-native-parallax-scroll": "^1.5.3",
 		"merge-stream": "^1.0.1",
 		"react": "16.0.0",
 		"react-native": "0.50.3",
 		"react-native-awesome-alerts": "^1.0.6",
 		"react-native-banner-carousel": "^1.0.2",
 		"react-native-easy-toast": "^1.0.9",
+		"react-native-parallax-scroll-view": "^0.21.0",
 		"react-native-scrollable-tab-view": "^0.8.0",
 		"react-native-tab-navigator": "^0.3.4",
 		"react-native-textinput-effects": "^0.4.2",

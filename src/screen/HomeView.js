@@ -5,6 +5,7 @@ import {
     StyleSheet,
     Text,
     View,
+    DeviceEventEmitter
 } from 'react-native'
 
 import { connect } from 'react-redux'
@@ -40,6 +41,10 @@ class HomeView extends React.Component {
     }
 
     componentWillUpdate =()=>this.props.changeLikeAction()
+
+    componentDidMount =() =>this.subscription = DeviceEventEmitter.addListener('reload',this._renderRefresh)
+
+    componentWillUnmount =()=>this.subscription.remove()
     
 
     _onEndReached = () => {

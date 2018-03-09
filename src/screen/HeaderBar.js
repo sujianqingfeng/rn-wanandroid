@@ -8,7 +8,7 @@ import {
   TouchableNativeFeedback
 } from "react-native";
 import PropTypes from "prop-types";
-import Icon from "react-native-vector-icons/Ionicons";
+import Icon from "react-native-vector-icons/Ionicons"
 
 const NAVBAR_HEIGHT_AMDROID = 50;
 const NAVBAR_HEIGHT_IOS = 44;

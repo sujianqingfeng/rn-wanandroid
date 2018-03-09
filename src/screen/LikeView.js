@@ -6,7 +6,8 @@ import {
   StyleSheet,
   TextInput,
   Dimensions,
-  SectionList
+  SectionList,
+  DeviceEventEmitter
 } from "react-native";
 
 import ArticleItemView from './ArticleItemView'
@@ -35,13 +36,14 @@ class LikeView extends Component {
     }
   }
 
-  componentWillReceiveProps = nextProps => {
+  componentDidMount =() =>this.subscription = DeviceEventEmitter.addListener('reload',()=>{
+    this.setState({page:0})
+    nextProps.getLikeList(0)
+  })
 
-    if(nextProps.isLogin&&!nextProps.isSucc){
-      this.setState({page:0})
-      nextProps.getLikeList(0)
-    }
-    
+  componentWillUnmount =()=>this.subscription.remove()
+
+  componentWillReceiveProps = nextProps => {
 
     const section = {
       key: "站内收藏",

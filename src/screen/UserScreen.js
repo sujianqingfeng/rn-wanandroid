@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
 import {
   View,
   Text,
@@ -6,19 +6,20 @@ import {
   StyleSheet,
   Dimensions,
   TouchableNativeFeedback,
-  StatusBar
+  StatusBar,
+  DeviceEventEmitter
 } from "react-native";
 import { connect } from 'react-redux'
-import Icon from "react-native-vector-icons/Ionicons";
-import Carousel from "react-native-banner-carousel";
+import Icon from "react-native-vector-icons/Ionicons"
+import Carousel from "react-native-banner-carousel"
 import Toast, { DURATION } from 'react-native-easy-toast'
 
-import LoginView from "./LoginView";
-import RegisterView from "./RegisterView";
+import LoginView from "./LoginView"
+import RegisterView from "./RegisterView"
 import * as userActions from '../actions/userActions'
 
-const windowWidth = Dimensions.get("window").width;
-const windowHeight = Dimensions.get("window").height;
+const windowWidth = Dimensions.get("window").width
+const windowHeight = Dimensions.get("window").height
 
 class UserScreen extends React.PureComponent {
 
@@ -30,6 +31,7 @@ class UserScreen extends React.PureComponent {
 
       if (props.isLoginSucc) {
         this.refs.toast.show('登陆成功', DURATION.LENGTH_SHORT);
+        DeviceEventEmitter.emit('reload')
         this._goBack()
       } else if (props.loginComplate) {
         this.refs.toast.show(props.loginData, DURATION.LENGTH_SHORT);

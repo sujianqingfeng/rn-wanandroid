@@ -5,6 +5,7 @@ import {
     Text,
     View,
     FlatList,
+    DeviceEventEmitter
 } from 'react-native'
 
 import ProjectItemView from './ProjectItemView'
@@ -29,6 +30,10 @@ class ProjectView extends React.Component {
             nextProps.message('取消收藏')
         }
     }
+
+    componentDidMount =() =>this.subscription = DeviceEventEmitter.addListener('reload',this._renderRefresh)
+
+    componentWillUnmount =()=>this.subscription.remove()
 
     _onEndReached = () => {
         let page = this.state.page

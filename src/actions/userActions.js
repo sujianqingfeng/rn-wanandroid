@@ -14,13 +14,8 @@ function login(username,password){
             username:username,
             password:password
         })
-        .then(res=>{
-            if(res.errorCode==0){
-                dispatch(createAction(userTypes.FETCH_LOGIN_DONE)(res.data))
-            }else{
-                dispatch(createAction(userTypes.FETCH_LOGIN_ERROR)(res.errorMsg))
-            }
-        })
+        .then(res=>dispatch(createAction(userTypes.FETCH_LOGIN_DONE)(res.data)))
+        .catch(error=>dispatch(createAction(userTypes.FETCH_LOGIN_ERROR)(error)))
     }
 }
 
@@ -42,14 +37,9 @@ function register(username,password,repassword){
             username:username,
             password:password,
             repassword:repassword
-        }).then(res=>{
-
-            if(res.errorCode==0){
-                dispatch(createAction(userTypes.FETCH_REGISTER_DONE)(res.data))
-            }else{
-                dispatch(createAction(userTypes.FETCH_REGISTER_ERROR)(res.errorMsg))
-            }
         })
+        .then(res=>dispatch(createAction(userTypes.FETCH_REGISTER_DONE)(res.data)))
+        .catch(error=> dispatch(createAction(userTypes.FETCH_REGISTER_ERROR)(error)))
     }
 }
 

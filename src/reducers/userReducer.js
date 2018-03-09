@@ -13,7 +13,8 @@ const defaultStatus = {
     isLoginLable:false,
     loginComplate:false,
     registerComplate:false,
-    isLogin:false
+    isLogin:false,
+    user:{}
 }
 
 
@@ -25,7 +26,8 @@ export default handleActions({
                 isLoginSucc: true,
                 loginComplate:true,
                 isLogin:true,
-                loginData: action.payload
+                loginData: action.payload,
+                user:action.payload
             }
         }
     },
@@ -36,7 +38,8 @@ export default handleActions({
                 isRegisterSucc: true,
                 isLogin:true,
                 registerComplate:true,
-                registerData: action.payload
+                registerData: action.payload,
+                user:action.payload
             }
         }
     },
