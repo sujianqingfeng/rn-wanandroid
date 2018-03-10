@@ -2,10 +2,6 @@
 # yarn lockfile v1
 
 
-"@monterosa/react-native-parallax-scroll@^1.5.3":
-  version "1.5.3"
-  resolved "https://registry.yarnpkg.com/@monterosa/react-native-parallax-scroll/-/react-native-parallax-scroll-1.5.3.tgz#66e85ba53f78162a0b6c33ec2950a088d749276e"
-
 abab@^1.0.3:
   version "1.0.4"
   resolved "http://r.cnpmjs.org/abab/download/abab-1.0.4.tgz#5faad9c2c07f60dd76770f71cf025b62a63cfd4e"

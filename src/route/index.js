@@ -10,80 +10,89 @@ import WelcomeScreen from '../screen/WelcomeScreen'
 import AboutScreen from '../screen/AboutScreen'
 import { DrawerNavigator, StackNavigator } from 'react-navigation';
 
+
+
+const homeDrawer = DrawerNavigator(
+    {
+        home: {
+            screen: HomeScreen,
+        }
+       
+    },
+    {
+        drawerWidth: 260,
+        drawerPosition: 'left',
+        contentComponent: UserDrawer,
+        contentOptions:{
+            initialRouteName:'home'
+        }
+    }
+)
+
+
 const NavHome = StackNavigator({
     welcome: {
         screen: WelcomeScreen,
-        navigationOptions:{
-            header:null
+        navigationOptions: {
+            header: null
         }
 
     },
     home: {
-        screen: HomeScreen,
-        navigationOptions:{
-            header:null
+        screen: homeDrawer,
+        navigationOptions: {
+            header: null
         }
     },
     login: {
         screen: LoginScreen,
-        navigationOptions:{
-            header:null
+        navigationOptions: {
+            header: null
         }
     },
     system_datail: {
         screen: SystemDetailScreen,
-        navigationOptions:{
-            header:null
+        navigationOptions: {
+            header: null
         }
     },
-    article_detail:{
-        screen:ArticleDetailSceen,
-        navigationOptions:{
-            header:null
+    article_detail: {
+        screen: ArticleDetailSceen,
+        navigationOptions: {
+            header: null
         }
     },
-    search:{
-        screen:SearchScreen,
-        navigationOptions:{
-            header:null
+    search: {
+        screen: SearchScreen,
+        navigationOptions: {
+            header: null
         }
     },
-    search_result:{
-        screen:SearchResultScreen,
-        navigationOptions:{
-            header:null
+    search_result: {
+        screen: SearchResultScreen,
+        navigationOptions: {
+            header: null
         }
     },
-    theme:{
-        screen:ThemeScreen,
-        navigationOptions:{
-            header:null
+    theme: {
+        screen: ThemeScreen,
+        navigationOptions: {
+            header: null
         }
     },
-    about:{
-        screen:AboutScreen,
-        navigationOptions:{
-            header:null
+    about: {
+        screen: AboutScreen,
+        navigationOptions: {
+            header: null
         }
     }
+},{
+    initialRouteName: 'welcome',
+    navigationOptions: ({navigation, screenProps}) => ({
+        gesturesEnabled: true,
+    }),
 }
 )
 
 
-const RootNavigator = DrawerNavigator({
-
-    home: {
-        screen: NavHome,
-    }
-
-}, {
-        drawerWidth: 260,
-        drawerPosition: 'left',
-        contentComponent: UserDrawer
-    })
-
-
-
-
-
-export default RootNavigator;
+export default NavHome
