@@ -67,7 +67,7 @@ class UserScreen extends React.PureComponent {
         <View style={styles.closeWarpper}>
           <TouchableNativeFeedback
             background={TouchableNativeFeedback.Ripple("rgba(52,52,52,0.5)", true)}
-            onPress={this._goBack}>
+            onPress={()=>this.props.navigation.goBack()}>
             <View style={{ height: 40, width: 40, borderRadius: 20 }}>
               <Icon
                 style={{ marginHorizontal: 8 }}
