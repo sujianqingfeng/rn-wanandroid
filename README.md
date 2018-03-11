@@ -1,6 +1,7 @@
 # rn-wanandroid
 
-> 此项目是练习RN之作，肯定有写的不好的地方，望多多包涵。
+> 此项目是练习RN之作，肯定有写的不好的地方，望多多包涵。走过路过，给个start咯。
+
 
 此项目是鸿神wanandroid的一个客户端，[地址 http://wanandroid.com/](http://wanandroid.com/)，一个致力于分享各种Android干货的平台。
 
