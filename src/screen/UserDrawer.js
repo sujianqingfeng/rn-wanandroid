@@ -14,6 +14,8 @@ import Icon from "react-native-vector-icons/Ionicons"
 
 import RealmUtil from '../utils/RealmUtil'
 import * as userActions from '../actions/userActions'
+import * as updateActions from '../actions/updateActions'
+
 const winheight = Dimensions.get('window').height
 
 class UserDrawer extends Component {
@@ -91,6 +93,19 @@ class UserDrawer extends Component {
                     </View>
                 </TouchableNativeFeedback>
 
+
+                <TouchableNativeFeedback
+                    onPress={() => this.props.updateApp()}>
+                    <View style={styles.item}>
+                        <Icon
+                            name='md-cloud-download'
+                            size={30} color={themeColor} />
+
+                        <Text style={styles.itemText}>检测更新</Text>
+                    </View>
+                </TouchableNativeFeedback>
+
+
                 <TouchableNativeFeedback
                     onPress={() => this.props.navigation.navigate('about')}>
                     <View style={styles.item}>
@@ -160,10 +175,9 @@ const mapStateToProps = (state) => ({
 })
 
 
-
-
 const mapDispatchToProps = (dispatch) => ({
-    changeLoginState:(bool) =>dispatch(userActions.changeLoginState(bool))
+    changeLoginState:(bool) =>dispatch(userActions.changeLoginState(bool)),
+    updateApp:()=>dispatch(updateActions.updateApp())
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(UserDrawer)

@@ -10,6 +10,7 @@ import like from './likeReducer'
 import collect from './collectReducer'
 import articleDetail from './articleDetailReducer'
 import theme from './themeReducer'
+import update from './updateReducer'
 
 
 export default function getRootReducers(navReducer){
@@ -17,6 +18,7 @@ export default function getRootReducers(navReducer){
     return combineReducers({
         search:search,
         theme:theme,
+        update:update,
         articleDetail:articleDetail,
         collect:collect,
         user:user,
