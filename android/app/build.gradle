@@ -154,6 +154,9 @@ dependencies {
     compile 'com.aliyun.ams:alicloud-android-utdid:1.1.5.3'
     compile 'com.aliyun.ams:alicloud-android-ut:5.1.0'
     compile 'com.aliyun.ams:alicloud-android-third-push:3.0.5@aar'
+    compile 'com.aliyun.ams:alicloud-android-utils:1.1.1'
+    compile 'com.aliyun.ams:alicloud-android-beacon:1.0.1'
+
 }
 
 // Run this once to be able to run the application with BUCK
