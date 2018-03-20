@@ -13,7 +13,16 @@ function getFormData(params) {
 
 
 function request(method, url, params = '') {
-    console.log('请求链接', method, base_url + url)
+    
+    let request_url =  base_url + url
+    if(url.startsWith('http://')||url.startsWith('https://'))
+        request_url= url
+    else
+        request_url =  base_url + url
+    
+
+    console.log('请求链接', method,request_url)
+
     let config = {
         method: method
     }
@@ -28,7 +37,7 @@ function request(method, url, params = '') {
     console.log('参数', config)
 
     return new Promise((resole, reject) => {
-        fetch(base_url + url, config)
+        fetch(request_url, config)
             .then(res => {
                 if ((res.url.indexOf('user/login')!=-1 || res.url.indexOf('user/register'))!=-1 && res.headers.map.hasOwnProperty('set-cookie')) {
                     const cookie = res.headers.map['set-cookie'][0]

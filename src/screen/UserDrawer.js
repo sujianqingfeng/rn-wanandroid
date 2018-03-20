@@ -7,49 +7,84 @@ import {
     View,
     Image,
     TouchableNativeFeedback,
-    Alert
+    Alert,
+    
 } from 'react-native'
 import { connect } from 'react-redux'
 import Icon from "react-native-vector-icons/Ionicons"
+import Toast, { DURATION } from 'react-native-easy-toast'
+
 
 import RealmUtil from '../utils/RealmUtil'
 import * as userActions from '../actions/userActions'
 import * as updateActions from '../actions/updateActions'
+import GlobalStyles from '../../res/styles/GlobalStyles'
+import ModalDialog  from './ModalDialog'
 
 const winheight = Dimensions.get('window').height
 
 class UserDrawer extends Component {
 
 
+    constructor(props){
+        super(props)
+        this.state = {
+            dialogShow:false,
+            dialogText:''
+        }
+    }
+
+    componentWillReceiveProps = (nextProps)=>{
+       
+        if(nextProps.isUpdate){
+            this.setState({
+                dialogShow:true,
+                dialogAction:1,
+                dialogText:nextProps.updateContent
+            })
+        }
+            
+    }
 
     _iconClick = () => {
         const {isLogin,navigation,changeLoginState} = this.props
         if(isLogin){
-            Alert.alert(
-                '提示',
-                '你确定要注销账号么？',
-                [
-                   
-                    { text: '取消', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-                    { text: '确定', onPress: () => {RealmUtil.saveCookie('');changeLoginState} },
-                ],
-                { cancelable: true }
-            )
+            this.setState({
+                dialogShow:true,
+                dialogAction:0,
+                dialogText:'你确定要注销账号么？'
+            })
         }else{
             navigation.navigate('login')
         }
+    }
 
-       
+
+    _dialogCancel =()=>{
+        this.setState({dialogShow:false})
+    }
+
+
+    _dialogConfirm =()=>{
+        const {dialogAction}= this.state
+        const {changeLoginState} = this.props
+
+        if(dialogAction==0){
+            RealmUtil.saveCookie('')
+            changeLoginState(false)
+        }
+        this.setState({dialogShow:false})
     }
 
 
     render() {
 
         const { themeColor } = this.props
+        const {dialogShow,dialogText} = this.state
 
         return (
             <View style={styles.contentWarpper}>
-
+                
                 <View style={[styles.header, { backgroundColor: themeColor }]}>
                 <TouchableNativeFeedback
                     onPress={this._iconClick}>
@@ -116,6 +151,21 @@ class UserDrawer extends Component {
                         <Text style={styles.itemText}>关于</Text>
                     </View>
                 </TouchableNativeFeedback>
+
+                <View style={GlobalStyles.toast}>
+                  <Toast ref="toast" style={{ backgroundColor: 'rgba(0,0,0,0.7)' }} />
+                </View>
+
+
+                <ModalDialog
+                    _dialogContent = {dialogText}
+                    _dialogVisible={dialogShow}
+                    _dialogLeftBtnAction={this._dialogCancel}
+                    _dialogRightBtnAction={this._dialogConfirm}
+                    />
+
+                    
+
             </View>
         )
     }
@@ -171,7 +221,9 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
     themeColor: state.theme.color,
-    isLogin:state.user.isLogin
+    isLogin:state.user.isLogin,
+    isUpdate:state.update.isUpdate,
+    updateContent:state.update.content
 })
 
 

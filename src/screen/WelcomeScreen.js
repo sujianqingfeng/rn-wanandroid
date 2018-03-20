@@ -4,7 +4,8 @@ import {
     Text,
     StyleSheet,
     View,
-    Dimensions
+    Dimensions,
+    StatusBar
 } from 'react-native'
 
 import { connect } from 'react-redux'
@@ -44,6 +45,7 @@ class WelcomeScreen extends Component {
     render() {
         return (
             <View style={styles.textWarpper}>
+                <StatusBar translucent ={true}  />
                 <Text style={[styles.text, { color: this.state.color }]}>WAndroid</Text>
             </View>)
     }

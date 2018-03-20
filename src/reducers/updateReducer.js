@@ -5,8 +5,8 @@ import * as updateTypes from '../constants/updateTypes'
 
 
 const defaultStatus = {
-    data: [],
-    isSucc: false
+    isUpdate:false,
+    content:''
 }
 
 
@@ -14,10 +14,13 @@ const defaultStatus = {
 export default handleActions({
     [updateTypes.FETCH_UPDATE_DONE]: {
         next(state, action) {
+
+            const  {version,info} = action.payload
+
             return {
                 ...state,
-                isSucc: true,
-                data: action.payload
+                isUpdate: true,
+                content:info
             }
         }
     }
