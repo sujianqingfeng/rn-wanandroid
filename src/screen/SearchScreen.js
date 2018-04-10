@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { View, Text, StyleSheet, TextInput, Dimensions } from "react-native";
+import { View, Text, StyleSheet, TextInput, Dimensions,BackHandler } from "react-native";
 
 import HeaderBar from "./HeaderBar";
 import * as hotActions from "../actions/hotActions";
@@ -33,10 +33,14 @@ class SearchScreen extends Component {
   componentWillMount() {
     this.props.getHot();
     this.props.getFriend()
+    BackHandler.addEventListener('hardwareBackPress',()=>{
+      this.props.navigation.goBack()
+      return true
+    })
   }
 
   componentWillReceiveProps = nextProps => {
-    console.log(nextProps);
+
   };
 
   _renderTitleView = () => (

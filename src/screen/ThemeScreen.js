@@ -22,6 +22,14 @@ class ThemeScreen extends React.Component {
   }
 
 
+  componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress',()=>{
+      this.props.navigation.goBack()
+      return true
+    })
+  }
+
+
   _changeIndex =(index) =>{
 
     let colors =this.state.colors

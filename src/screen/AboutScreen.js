@@ -13,6 +13,15 @@ const window = Dimensions.get('window')
 
 class AboutScreen extends React.Component {
 
+
+    componentWillMount() {
+        BackHandler.addEventListener('hardwareBackPress',()=>{
+          this.props.navigation.goBack()
+          return true
+        })
+      }
+
+
     _renderForeground = () => (
         <View key="parallax-header" style={[styles.parallaxHeader, { backgroundColor: this.props.backgroundColor }]}>
             <Image style={styles.avatar} source={require('./../../res/images/background_draw.jpeg')} />

@@ -18,8 +18,14 @@ class SearchResultScreen extends Component {
     } 
   }
 
+  
+
   componentWillMount(){
     this.props.getSearchResult(this.state.page,this.props.navigation.state.params.k)
+    BackHandler.addEventListener('hardwareBackPress',()=>{
+      this.props.navigation.goBack()
+      return true
+    })
   }
 
 

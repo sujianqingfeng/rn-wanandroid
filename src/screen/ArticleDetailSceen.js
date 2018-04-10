@@ -19,6 +19,13 @@ export class ActicleDetailScreen extends React.PureComponent {
 
     }
 
+    componentWillMount() {
+        BackHandler.addEventListener('hardwareBackPress',()=>{
+          this.props.navigation.goBack()
+          return true
+        })
+      }
+
 
     _like = ()=>{
         const {detailCancelCollectInArticle,detailAddCollectInSite,isLogin} = this.props

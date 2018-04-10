@@ -52,6 +52,13 @@ class UserScreen extends React.PureComponent {
     this.timer&&clearTimeout(this.timer)
   }
 
+  componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress',()=>{
+      this.props.navigation.goBack()
+      return true
+    })
+  }
+
   _goBack = () =>{
     this.timer = setTimeout(()=>this.props.navigation.goBack(),1000)
   } 

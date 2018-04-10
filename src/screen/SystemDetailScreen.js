@@ -21,6 +21,13 @@ class SystemDetailScreen extends Component {
     this.refs.toast.show(message, DURATION.LENGTH_SHORT);
   }
 
+  componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress',()=>{
+      this.props.navigation.goBack()
+      return true
+    })
+  }
+
 
 
   render() {
