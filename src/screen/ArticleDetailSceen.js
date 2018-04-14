@@ -5,7 +5,8 @@ import {
     Text,
     WebView,
     StyleSheet,
-    Dimensions
+    Dimensions,
+    BackHandler
 } from 'react-native'
 import Toast, { DURATION } from 'react-native-easy-toast'
 
