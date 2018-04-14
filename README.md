@@ -5,6 +5,8 @@
 
 此项目是鸿神wanandroid的一个客户端，[地址 http://wanandroid.com/](http://wanandroid.com/)，一个致力于分享各种Android干货的平台。
 
+下载链接[点击下载](https://github.com/sujianqingfeng/rn-wanandroid/raw/master/android/app/app-release.apk)
+
 ## 项目依赖
 
  - [react 16.0.0](https://github.com/facebook/react)
